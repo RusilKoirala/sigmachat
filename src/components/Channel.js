@@ -4,6 +4,8 @@ import firebase from 'firebase/app';
 import { useFirestoreQuery } from '../hooks';
 // Components
 import Message from './Message';
+import '../message.css'; // Adjust the path according to your folder structure
+
 
 const Channel = ({ user = null }) => {
   const db = firebase.firestore();
@@ -54,13 +56,8 @@ const Channel = ({ user = null }) => {
       <div className="overflow-auto h-full">
         <div className="py-4 max-w-screen-lg mx-auto">
           <div className="border-b dark:border-gray-600 border-gray-200 py-8 mb-4">
-            <div className="font-bold text-3xl text-center">
-              <p className="mb-1">Welcome to</p>
-              <p className="mb-3">React FireChat</p>
-            </div>
-            <p className="text-gray-400 text-center">
-              This is the beginning of this chat.
-            </p>
+            
+            
           </div>
           <ul>
             {messages

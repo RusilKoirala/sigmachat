@@ -1,0 +1,116 @@
+
+  /* Input and Button Styles for Discord-like UI */
+
+/* Input Field */
+/* Discord-like styling for the input form */
+form.flex.flex-row {
+    background-color: #2f3136 !important;
+    border-radius: 20px;
+    padding: 12px 16px;
+    box-shadow: 0 1px 5px rgba(0, 0, 0, 0.2);
+    width: 600px;
+    display: flex;
+    align-items: center; /* Center vertically */
+    min-height: 48px; /* Optional: makes the box taller */
+  }
+  
+  /* Input field */
+  form.flex.flex-row input.flex-1 {
+    background-color: transparent;
+    border: none;
+    outline: none;
+    color: #dcddde;
+    font-size: 14px;
+    padding: 10px;
+    flex: 1; /* Let it expand to fill remaining space */
+  }
+  
+  /* Placeholder text */
+  form.flex.flex-row input.flex-1::placeholder {
+    color: #72767d;
+  }
+  
+  /* Submit button */
+  form.flex.flex-row button {
+    background-color: #5865f2;
+    color: white;
+    padding: 8px 16px;
+    border-radius: 20px;
+    margin-left: 12px;
+    transition: background-color 0.2s ease;
+    white-space: nowrap; /* Prevent wrapping */
+  }
+  
+  form.flex.flex-row button:hover {
+    background-color: #4752c4;
+  }
+  
+  form.flex.flex-row button:disabled {
+    background-color: #4f545c;
+    cursor: not-allowed;
+    color: #999;
+  }
+  
+/* Profile icon styling */
+/* Profile icon styling */
+/* Flex container for message */
+.message-container {
+    display: flex;
+    align-items: flex-start;
+    margin-bottom: 8px; /* Space between messages */
+    padding: 12px;
+  }
+  
+  /* Profile icon */
+  .profile-icon {
+    border-radius: 50%;
+    margin-right: 10px;
+  }
+  
+  /* Message content: Name, Time, and Message */
+  .message-content {
+    display: flex;
+    flex-direction: column; /* Keeps name and message stacked vertically */
+    width: 100%; /* Take full width */
+  }
+  
+  /* Message header: Name and Time aligned horizontally */
+  .message-header {
+    display: flex;
+    justify-content: space-between; /* Align name and time to opposite ends */
+    align-items: center; /* Center vertically */
+    margin-bottom: 5px;
+  }
+  
+  .username {
+    font-weight: bold;
+    margin-right: 10px;
+  }
+  
+  .timestamp {
+    font-size: 12px;
+    color: #aaa;
+    margin-left: 10px;
+  }
+  
+  /* Styling for message text */
+  .message-text {
+    font-size: 14px;
+    line-height: 1.5;
+  }
+  
+  /* User and other messages */
+  .user-message {
+    background-color: #007bff;
+    color: white;
+    text-align: right;
+    margin-left: auto;
+  }
+  
+  .other-message {
+    background-color: #f1f1f1;
+    color: #333;
+    text-align: left;
+    margin-right: auto;
+  }
+  
