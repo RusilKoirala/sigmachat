@@ -44,6 +44,9 @@ const MyCodes = () => (
             🚧 Under Construction 🚧
           </div>
         </div>
+        <p className="text-xs text-gray-500 font-light mt-8">
+          Made By OG Rusil
+        </p>
       </div>
     </div>
   </div>

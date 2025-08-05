@@ -430,6 +430,9 @@ Blocks: \`\`\`code\`\`\``;
               </div>
             </div>
             <div className="flex items-center space-x-4">
+              <span className="text-xs text-gray-400 font-bold hidden sm:block">
+                Made By OG Rusil
+              </span>
               <button
                 onClick={() => setShowUsers(v => !v)}
                 className="px-4 py-2 border border-gray-600 text-white hover:bg-gray-800 transition-colors font-medium text-sm"

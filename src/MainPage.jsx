@@ -92,7 +92,10 @@ const MainPage = () => {
       <section className="py-20 bg-white text-black">
         <div className="text-center">
           <h2 className="text-4xl font-bold mb-8">Features</h2>
-          <p className="text-6xl font-light text-gray-400">None</p>
+          <p className="text-6xl font-light text-gray-400 mb-12">None</p>
+          <p className="text-sm text-gray-500 font-light">
+            Made By OG Rusil
+          </p>
         </div>
       </section>
 
