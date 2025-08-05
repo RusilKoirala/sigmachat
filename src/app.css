@@ -1,272 +1,43 @@
-/* Global Styles */
-body {
-    font-family: 'Roboto', sans-serif;
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    transition: all 0.3s ease-in-out;
-  }
-  
-  *,
-  *::before,
-  *::after {
-    box-sizing: inherit;
-  }
-  
-  a {
-    text-decoration: none;
-  }
-  
-  ul {
-    list-style-type: none;
-  }
-  
-  /* Dark and Light Mode */
-  .app {
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh;
-    color: var(--text-color);
-  }
-  
-  .app.light-mode {
-    --bg-color: #f9f9f9;
-    --text-color: #333;
-  }
-  
-  .app.dark-mode {
-    --bg-color: #121212;
-    --text-color: #fff;
-  }
-  
-  .app {
-    background-color: var(--bg-color);
-    color: var(--text-color);
-  }
-  
-  /* Header */
-  header {
-    background-color: var(--bg-color);
-    padding: 15px 30px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  }
-  
-  .header-container {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-  
-  .toggle-theme-btn {
-    background: none;
-    border: none;
-    cursor: pointer;
-    padding: 10px;
-  }
-  
-  .theme-icon {
-    width: 24px;
-    height: 24px;
-    color: var(--text-color);
-  }
-  
-  /* Main Content */
-  .main {
-    flex-grow: 1;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 20px;
-  }
-  
-  .centered {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    flex-direction: column;
-  }
-  
-  .auth-card {
-    background: var(--bg-color);
-    padding: 30px;
-    border-radius: 8px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-    width: 100%;
-    max-width: 400px;
-    text-align: center;
-  }
-  
-  .logo {
-    font-size: 2rem;
-    margin-bottom: 10px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  
-  .logo-icon {
-    width: 30px;
-    height: 30px;
-    margin-right: 10px;
-  }
-  
-  .description {
-    color: var(--text-color);
-    font-size: 1rem;
-    margin-bottom: 20px;
-  }
-  
-  .google-signin-btn {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: #4285f4;
-    color: #fff;
-    padding: 12px 20px;
-    border-radius: 8px;
-    font-size: 1rem;
-    font-weight: 600;
-    width: 100%;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-  }
-  
-  .google-signin-btn:hover {
-    background-color: #357ae8;
-  }
-  
-  .google-icon {
-    width: 20px;
-    height: 20px;
-    margin-right: 10px;
-  }
-  
-  /* Profile Picture Circle */
-  .chat-profile-picture {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    object-fit: cover;
-    border: 3px solid #fff;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
-  }
-  
-  /* Chat Window Styles */
-  .chat-window {
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-    max-width: 600px;
-    background-color: var(--bg-color);
-    border-radius: 8px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    padding: 20px;
-  }
-  
-  .chat-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-  
-  .chat-header h2 {
-    font-size: 1.5rem;
-  }
-  
-  .chat-body {
-    flex-grow: 1;
-    overflow-y: auto;
-    margin-top: 20px;
-  }
-  
-  .chat-message {
-    display: flex;
-    align-items: center;
-    margin-bottom: 15px;
-  }
-  
-  .chat-message .chat-profile-picture {
-    margin-right: 10px;
-  }
-  
-  .chat-message .message {
-    background-color: #ececec;
-    padding: 10px 15px;
-    border-radius: 12px;
-    max-width: 80%;
-  }
-  
-  .chat-message.self .message {
-    background-color: #4caf50;
-    color: #fff;
-    align-self: flex-end;
-  }
-  
-  .chat-input {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-top: 20px;
-  }
-  
-  .chat-input input {
-    width: 80%;
-    padding: 10px;
-    border-radius: 12px;
-    border: 1px solid #ccc;
-    background-color: var(--bg-color);
-  }
-  
-  .chat-input button {
-    background-color: #4caf50;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 12px;
-    color: #fff;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-  }
-  
-  .chat-input button:hover {
-    background-color: #45a049;
-  }
-  
-  /* Footer */
-  footer {
-    background-color: var(--bg-color);
-    padding: 15px;
-    text-align: center;
-    box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.1);
-  }
-  
-  .footer-content {
-    color: var(--text-color);
-    font-size: 0.875rem;
-  }
-  
-  /* Loading Spinner */
-  .loader {
-    border: 5px solid #f3f3f3;
-    border-top: 5px solid #4caf50;
-    border-radius: 50%;
-    width: 50px;
-    height: 50px;
-    animation: spin 1s linear infinite;
-  }
-  
-  @keyframes spin {
-    0% {
-      transform: rotate(0deg);
-    }
-    100% {
-      transform: rotate(360deg);
-    }
-  }
-  
-  /* Shadow Effect for Cards */
-  .shadow-card {
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  }
+/* src/app.css */
 
-  
+/* Example global styles. Add your own as needed. */
+body {
+  font-family: 'Inter', system-ui, Avenir, Helvetica, Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background: #000;
+  color: #fff;
+}
+
+/* Hide scrollbars */
+.scrollbar-hide {
+  -ms-overflow-style: none;  /* Internet Explorer 10+ */
+  scrollbar-width: none;  /* Firefox */
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;  /* Safari and Chrome */
+}
+
+/* Smooth scrolling */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Custom animations */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fadeInUp {
+  animation: fadeInUp 0.6s ease-out;
+}
+
+/* You can add more custom styles or Tailwind overrides here. */
