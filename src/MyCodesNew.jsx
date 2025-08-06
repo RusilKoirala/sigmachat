@@ -100,18 +100,26 @@ const MyCodes = () => {
             <div className="bg-gray-900 border border-gray-700 rounded-lg p-6">
               <div className="text-center mb-6">
                 <span className="text-4xl">🕵️</span>
-                <h3 className="text-xl font-bold mt-2">VIP Access Only</h3>
+                <h3 className="text-xl font-bold mt-2">Grade 11 Practical Codes</h3>
                 <p className="text-gray-400 text-sm mt-2">
-                  Exclusive codes for VIP members with advanced features
+                  C Programming and HTML codes for computer practicals
                 </p>
               </div>
 
-              <Link
-                to="/codes/vip"
-                className="block w-full bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-500 hover:to-blue-500 text-white font-bold py-3 px-4 rounded-lg transition-all duration-300 text-center"
-              >
-                🔓 Enter VIP Area
-              </Link>
+              <div className="space-y-3">
+                <Link
+                  to="/codes/c-programming"
+                  className="block w-full bg-blue-600 hover:bg-blue-500 text-white font-bold py-3 px-4 rounded-lg transition-colors text-center"
+                >
+                  C Programming
+                </Link>
+                <Link
+                  to="/codes/html-programming"
+                  className="block w-full bg-orange-600 hover:bg-orange-500 text-white font-bold py-3 px-4 rounded-lg transition-colors text-center"
+                >
+                  HTML Programming
+                </Link>
+              </div>
 
               <div className="mt-4 text-center">
                 <p className="text-xs text-gray-500">

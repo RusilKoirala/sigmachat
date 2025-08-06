@@ -2,6 +2,70 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import SigmaIcon from './components/SigmaIcon.jsx';
 
+// Create VipCodes component
+const VipCodes = () => {
+  return (
+    <div className="min-h-screen bg-black text-white">
+      <nav className="fixed top-0 left-0 right-0 z-50 bg-black bg-opacity-80 backdrop-blur-sm border-b border-gray-800">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex justify-between items-center h-16">
+            <div className="flex items-center">
+              <Link to="/" className="text-white text-xl font-bold tracking-wider flex items-center space-x-2">
+                <SigmaIcon className="w-6 h-6" />
+                <span>SIGMA</span>
+              </Link>
+            </div>
+            <div className="flex space-x-8">
+              <Link to="/chat" className="text-gray-300 hover:text-white transition-colors duration-200 font-medium">Chat</Link>
+              <Link to="/codes" className="text-gray-300 hover:text-white transition-colors duration-200 font-medium">Code</Link>
+              <span className="text-green-400 font-medium">VIP AREA</span>
+            </div>
+          </div>
+        </div>
+      </nav>
+      <div className="pt-20 px-4 max-w-6xl mx-auto">
+        <div className="text-center mb-12">
+          <h1 className="text-5xl font-bold mb-4 tracking-wider">VIP CODE VAULT</h1>
+          <p className="text-xl text-gray-400 font-light">Grade 11 Computer Practical Programs</p>
+        </div>
+        <div className="grid md:grid-cols-2 gap-8 mb-16">
+          <Link to="/codes/c-programming" className="group block">
+            <div className="bg-gray-900 border border-gray-700 hover:border-blue-500 rounded-lg p-8 transition-all duration-300 hover:scale-105">
+              <div className="text-center">
+                <h3 className="text-2xl font-bold text-white mb-4">C Programming</h3>
+                <p className="text-gray-400 mb-6">Complete collection of C programs for Grade 11 practicals</p>
+                <div className="space-y-2 text-sm text-gray-500">
+                  <p>Basic Programs - 6 programs</p>
+                  <p>Loops - 4 programs</p>
+                  <p>Arrays - 3 programs</p>
+                </div>
+                <div className="mt-6 text-blue-400 font-medium">13 Programs Available</div>
+              </div>
+            </div>
+          </Link>
+          <Link to="/codes/html-programming" className="group block">
+            <div className="bg-gray-900 border border-gray-700 hover:border-orange-500 rounded-lg p-8 transition-all duration-300 hover:scale-105">
+              <div className="text-center">
+                <h3 className="text-2xl font-bold text-white mb-4">HTML Programming</h3>
+                <p className="text-gray-400 mb-6">Complete collection of HTML programs for web development</p>
+                <div className="space-y-2 text-sm text-gray-500">
+                  <p>Basic HTML - 3 programs</p>
+                  <p>Forms - 2 programs</p>
+                  <p>Tables - 2 programs</p>
+                </div>
+                <div className="mt-6 text-orange-400 font-medium">7 Programs Available</div>
+              </div>
+            </div>
+          </Link>
+        </div>
+        <div className="text-center py-8">
+          <p className="text-xs text-gray-500 font-light">Made By OG Rusil</p>
+        </div>
+      </div>
+    </div>
+  );
+};
+
 const CProgramming = () => {
   const [copiedCode, setCopiedCode] = useState('');
 
@@ -453,3 +517,4 @@ int main() {
 };
 
 export default CProgramming;
+export { VipCodes };

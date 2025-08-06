@@ -10,8 +10,7 @@ import MainPage from './MainPage.jsx';
 import ChatPage from './ChatPage.jsx';
 import MyCodes from './MyCodesNew.jsx';
 import BouncingBallGame from './BouncingBallGame.jsx';
-import VipCodes from './VipCodes.jsx';
-import CProgramming from './CProgramming.jsx';
+import CProgramming, { VipCodes } from './CProgramming.jsx';
 import HTMLProgramming from './HTMLProgramming.jsx';
 import Loader from './components/Loader.jsx';
 
