@@ -5,7 +5,7 @@ const englishBadWords = [
   // Common English profanity
   'fuck', 'shit', 'bitch', 'damn', 'hell', 'ass', 'bastard', 'crap',
   'piss', 'dick', 'cock', 'pussy', 'whore', 'slut', 'fag', 'nigger',
-  'retard', 'idiot', 'stupid', 'moron', 'dumb', 'gay', 'lesbian',
+  'retard', 'idiot', 'stupid', 'moron', 'dumb', 'gay', 'lesbian', 'trans','nigga',
   // Variations and leetspeak
   'f*ck', 'sh*t', 'b*tch', 'f**k', 'sh**', 'fuk', 'fck', 'sht',
   'btch', 'dmn', 'azz', 'a$$', 'fuk', 'fuq', 'fuc', 'shyt',

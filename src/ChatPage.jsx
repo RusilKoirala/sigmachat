@@ -44,6 +44,9 @@ const ChatPage = () => {
   const [adminSessionId, setAdminSessionId] = useState(null);
   const [lastMessageTime, setLastMessageTime] = useState(0);
   const [messageCount, setMessageCount] = useState(0);
+  const [spamPenalty, setSpamPenalty] = useState(0); // Penalty end time
+  const [spamStrikes, setSpamStrikes] = useState(0); // Number of spam violations
+  const [penaltyCountdown, setPenaltyCountdown] = useState(0); // Real-time countdown
   const [newMessageIndicator, setNewMessageIndicator] = useState(false);
   const navigate = useNavigate();
 
@@ -157,6 +160,33 @@ const ChatPage = () => {
     }
   }, [messages?.length, isAtBottom]);
 
+  // Handle spam penalty countdown
+  useEffect(() => {
+    if (spamPenalty > 0) {
+      const interval = setInterval(() => {
+        const now = Date.now();
+        if (spamPenalty > now) {
+          const remaining = Math.ceil((spamPenalty - now) / 1000);
+          setPenaltyCountdown(remaining);
+
+          // Update error message with countdown
+          const minutes = Math.floor(remaining / 60);
+          const seconds = remaining % 60;
+          const timeDisplay = minutes > 0 ? `${minutes}m ${seconds}s` : `${seconds}s`;
+          setError(`🚫 Spam cooldown: ${timeDisplay} remaining`);
+        } else {
+          // Penalty expired
+          setSpamPenalty(0);
+          setPenaltyCountdown(0);
+          setError('');
+          clearInterval(interval);
+        }
+      }, 1000);
+
+      return () => clearInterval(interval);
+    }
+  }, [spamPenalty]);
+
   const scrollToBottom = () => {
     if (bottomListRef.current) {
       bottomListRef.current.scrollIntoView({ behavior: 'smooth' });
@@ -191,19 +221,59 @@ const ChatPage = () => {
         setMessageCount(0);
       }
 
+      // Check if user is currently penalized (skip for admins)
+      if (!isAdmin && spamPenalty > now) {
+        const remainingTime = Math.ceil((spamPenalty - now) / 1000);
+        const minutes = Math.floor(remainingTime / 60);
+        const seconds = remainingTime % 60;
+        const timeDisplay = minutes > 0 ? `${minutes}m ${seconds}s` : `${seconds}s`;
+        setError(`🚫 Spam cooldown: ${timeDisplay} remaining`);
+        return;
+      }
+
       // Check rate limits
-      if (timeSinceLastMessage < 1000) { // Less than 1 second
+      if (timeSinceLastMessage < 1000) { // 1 second minimum between messages
         setError('Please wait before sending another message.');
         return;
       }
 
-      if (messageCount >= 5 && timeSinceLastMessage < 60000) { // More than 5 messages in 60 seconds
-        setError('Too many messages. Please wait a moment.');
-        return;
+      // Reset message count if more than 60 seconds have passed
+      if (timeSinceLastMessage >= 60000) {
+        setMessageCount(1); // Reset to 1 (current message)
+        // Also reset spam strikes after 5 minutes of good behavior
+        if (timeSinceLastMessage >= 300000) {
+          setSpamStrikes(0);
+        }
+      } else {
+        // Skip spam penalties for admins
+        if (!isAdmin && messageCount >= 8) { // 8 messages in 60 seconds triggers penalty
+          // Progressive penalties
+          const newStrikes = spamStrikes + 1;
+          setSpamStrikes(newStrikes);
+
+          let penaltyDuration;
+          if (newStrikes === 1) {
+            penaltyDuration = 30000; // 30 seconds
+            setError('⚠️ Slow down! 30 second cooldown for spamming.');
+          } else if (newStrikes === 2) {
+            penaltyDuration = 60000; // 1 minute
+            setError('🚫 Spam detected! 1 minute cooldown.');
+          } else if (newStrikes === 3) {
+            penaltyDuration = 300000; // 5 minutes
+            setError('🔒 Excessive spam! 5 minute cooldown.');
+          } else {
+            penaltyDuration = 600000; // 10 minutes
+            setError('⛔ Severe spam violation! 10 minute cooldown.');
+          }
+
+          setSpamPenalty(now + penaltyDuration);
+          setMessageCount(0); // Reset count
+          return;
+        }
+        setMessageCount(prev => prev + 1);
       }
 
       setLastMessageTime(now);
-      setMessageCount(prev => prev + 1);
     }
 
     // Handle admin login
@@ -411,15 +481,24 @@ Blocks: \`\`\`code\`\`\``;
 
     // Check for profanity (skip for admin users)
     if (!isAdmin) {
-      console.log('Checking message for profanity:', trimmedMessage);
       const hasProfanity = containsProfanity(trimmedMessage);
-      console.log('Contains profanity:', hasProfanity);
 
       if (hasProfanity) {
-        setError(getBadWordWarning());
-        setTimeout(() => setError(''), 4000);
+        const warningMessage = getBadWordWarning();
+        setError(warningMessage);
+        console.log('Profanity detected for user:', username, 'Message blocked');
+
+        // Clear error after 3 seconds (reduced from 4)
+        setTimeout(() => {
+          setError('');
+        }, 3000);
+
         // Refocus input after profanity warning
-        setTimeout(() => inputRef.current?.focus(), 100);
+        setTimeout(() => {
+          if (inputRef.current) {
+            inputRef.current.focus();
+          }
+        }, 100);
         return;
       }
     }
