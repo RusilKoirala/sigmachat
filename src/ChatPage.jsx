@@ -5,6 +5,7 @@ import { useFirestoreQuery, getAvatarUrl, useRequireUsername } from './hooks.js'
 import Loader from './components/Loader.jsx';
 import MessageRenderer from './components/MessageRenderer.jsx';
 import SigmaIcon from './components/SigmaIcon.jsx';
+import { containsProfanity, getBadWordWarning } from './utils/profanityFilter';
 import { getFirestore, collection, addDoc, updateDoc, doc, serverTimestamp, arrayUnion, query, orderBy, limit, setDoc, deleteDoc, onSnapshot, getDocs } from 'firebase/firestore';
 import { initializeApp } from 'firebase/app';
 
@@ -27,8 +28,8 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(' ');
 }
 
-const PRESENCE_TIMEOUT = 60 * 1000; // 60 seconds
-const HEARTBEAT_INTERVAL = 20 * 1000; // 20 seconds
+const PRESENCE_TIMEOUT = 30 * 1000; // 30 seconds - faster timeout for more real-time presence
+const HEARTBEAT_INTERVAL = 10 * 1000; // 10 seconds - more frequent heartbeat
 
 const ChatPage = () => {
   useRequireUsername();
@@ -43,6 +44,7 @@ const ChatPage = () => {
   const [adminSessionId, setAdminSessionId] = useState(null);
   const [lastMessageTime, setLastMessageTime] = useState(0);
   const [messageCount, setMessageCount] = useState(0);
+  const [newMessageIndicator, setNewMessageIndicator] = useState(false);
   const navigate = useNavigate();
 
   // Admin password (in a real app, this would be server-side)
@@ -74,11 +76,12 @@ const ChatPage = () => {
     localStorage.removeItem(`sigmachat-admin-${username}`);
     localStorage.removeItem(`sigmachat-admin-time-${username}`);
   };
-  // Chronological order: oldest at top, newest at bottom
-  const messagesQuery = query(messagesRef, orderBy('createdAt', 'asc'), limit(100));
+  // Chronological order: oldest at top, newest at bottom - increased limit for more history
+  const messagesQuery = query(messagesRef, orderBy('createdAt', 'asc'), limit(200));
   const messages = useFirestoreQuery(messagesQuery);
   const bottomListRef = useRef();
   const chatContainerRef = useRef();
+  const inputRef = useRef();
   const [loading, setLoading] = useState(false);
 
   // Presence: add/update on mount, remove on unmount, heartbeat
@@ -102,14 +105,17 @@ const ChatPage = () => {
     };
   }, [username]);
 
-  // Listen for active users in presence collection
+  // Listen for active users in presence collection - real-time updates
   useEffect(() => {
     const unsubscribe = onSnapshot(presenceRef, snapshot => {
       const now = Date.now();
       const users = snapshot.docs
         .map(doc => doc.data())
-        .filter(u => u.lastActive && now - u.lastActive < PRESENCE_TIMEOUT);
+        .filter(u => u.lastActive && now - u.lastActive < PRESENCE_TIMEOUT)
+        .sort((a, b) => a.username.localeCompare(b.username)); // Sort alphabetically
       setActiveUsers(users);
+    }, error => {
+      console.error('Error listening to presence:', error);
     });
     return unsubscribe;
   }, []);
@@ -133,12 +139,18 @@ const ChatPage = () => {
   // Handle auto-scroll only for new messages when user is at bottom
   useEffect(() => {
     if (isAtBottom && bottomListRef.current && messages && messages.length > 0) {
-      // Use setTimeout to ensure DOM is updated
+      // Use setTimeout to ensure DOM is updated - reduced delay for faster scroll
       setTimeout(() => {
         if (bottomListRef.current) {
           bottomListRef.current.scrollIntoView({ behavior: 'smooth' });
         }
-      }, 100);
+      }, 50);
+    }
+
+    // Show new message indicator briefly when not at bottom
+    if (!isAtBottom && messages && messages.length > 0) {
+      setNewMessageIndicator(true);
+      setTimeout(() => setNewMessageIndicator(false), 3000);
     }
   }, [messages?.length, isAtBottom]);
 
@@ -208,6 +220,8 @@ const ChatPage = () => {
         setTimeout(() => setError(''), 3000);
       }
       setNewMessage('');
+      // Refocus input after command
+      setTimeout(() => inputRef.current?.focus(), 100);
       return;
     }
 
@@ -217,6 +231,8 @@ const ChatPage = () => {
       setNewMessage('');
       setError('Admin mode deactivated');
       setTimeout(() => setError(''), 3000);
+      // Refocus input after command
+      setTimeout(() => inputRef.current?.focus(), 100);
       return;
     }
 
@@ -237,6 +253,7 @@ const ChatPage = () => {
 \`/help\` - Show commands
 \`/info\` - About SigmaChat
 \`/ping\` - Test response
+\`/rules\` - Chat rules
 \`/bold\` - Bold text help
 \`/italic\` - Italic text help
 \`/code\` - Code format help${isAdmin ? '\n\n**Admin:**\n`/clear` - Clear chat\n`/kick [user]` - Kick user\n`/logout` - End admin' : ''}`;
@@ -275,6 +292,16 @@ Inline: \`\`code\`\`
 Blocks: \`\`\`code\`\`\``;
           break;
 
+        case 'rules':
+          responseMessage = `📋 **Chat Rules:**
+
+• Be respectful to everyone
+• No spam or flooding
+• No bad language or profanity
+• Keep conversations friendly
+• Have fun! 😊`;
+          break;
+
         default:
           isPublicCommand = false;
       }
@@ -296,6 +323,8 @@ Blocks: \`\`\`code\`\`\``;
         } finally {
           setLoading(false);
         }
+        // Refocus input after command
+        setTimeout(() => inputRef.current?.focus(), 100);
         return;
       }
     }
@@ -367,12 +396,29 @@ Blocks: \`\`\`code\`\`\``;
       } finally {
         setLoading(false);
       }
+      // Refocus input after admin command
+      setTimeout(() => inputRef.current?.focus(), 100);
       return;
     }
 
     if (trimmedMessage.length > 500) {
       setError('Message too long (max 500 characters).');
       return;
+    }
+
+    // Check for profanity (skip for admin users)
+    if (!isAdmin) {
+      console.log('Checking message for profanity:', trimmedMessage);
+      const hasProfanity = containsProfanity(trimmedMessage);
+      console.log('Contains profanity:', hasProfanity);
+
+      if (hasProfanity) {
+        setError(getBadWordWarning());
+        setTimeout(() => setError(''), 4000);
+        // Refocus input after profanity warning
+        setTimeout(() => inputRef.current?.focus(), 100);
+        return;
+      }
     }
     setLoading(true);
     setError('');
@@ -390,16 +436,15 @@ Blocks: \`\`\`code\`\`\``;
     } finally {
       setLoading(false);
     }
+
+    // Refocus input after sending message
+    setTimeout(() => inputRef.current?.focus(), 100);
   };
 
   const handleLogout = () => {
     clearAdminSession();
     setUsername('');
     localStorage.removeItem('sigmachat-username');
-    navigate('/');
-  };
-
-  const handleHome = () => {
     navigate('/');
   };
 
@@ -536,11 +581,16 @@ Blocks: \`\`\`code\`\`\``;
         {showScrollButton && (
           <button
             onClick={scrollToBottom}
-            className="fixed bottom-20 right-6 bg-white text-black p-3 rounded-full shadow-lg hover:bg-gray-200 transition-all transform hover:scale-110 z-40"
+            className={`fixed bottom-20 right-6 bg-white text-black p-3 rounded-full shadow-lg hover:bg-gray-200 transition-all transform hover:scale-110 z-40 ${newMessageIndicator ? 'animate-pulse ring-4 ring-blue-400' : ''}`}
           >
             <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
             </svg>
+            {newMessageIndicator && (
+              <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center animate-bounce">
+                !
+              </span>
+            )}
           </button>
         )}
         {/* Message input */}
@@ -555,6 +605,7 @@ Blocks: \`\`\`code\`\`\``;
               </div>
             )}
             <input
+              ref={inputRef}
               type="text"
               className={classNames(
                 "w-full bg-gray-900 text-white rounded-full px-6 py-3 mr-4 focus:outline-none focus:ring-2 border",

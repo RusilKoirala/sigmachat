@@ -2,6 +2,7 @@ import React, { useState, useContext } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { UsernameContext } from './usernameContext.jsx';
 import SigmaIcon from './components/SigmaIcon.jsx';
+import { isValidUsername, getUsernameWarning } from './utils/profanityFilter';
 
 function getRandomMathCaptcha() {
   const a = Math.floor(Math.random() * 10) + 1;
@@ -23,19 +24,29 @@ const MainPage = () => {
 
   const handleSubmit = e => {
     e.preventDefault();
-    if (!username.trim()) {
+    const trimmedUsername = username.trim();
+
+    if (!trimmedUsername) {
       setError('Username is required.');
       return;
     }
+
+    // Validate username for profanity and appropriateness
+    if (!isValidUsername(trimmedUsername)) {
+      setError(getUsernameWarning());
+      return;
+    }
+
     if (captchaInput.trim() !== String(captcha.answer)) {
       setError('CAPTCHA is incorrect.');
       setCaptcha(getRandomMathCaptcha());
       setCaptchaInput('');
       return;
     }
+
     setError('');
-    setCtxUsername(username.trim());
-    localStorage.setItem('sigmachat-username', JSON.stringify(username.trim()));
+    setCtxUsername(trimmedUsername);
+    localStorage.setItem('sigmachat-username', JSON.stringify(trimmedUsername));
     navigate('/chat');
   };
 
@@ -125,6 +136,9 @@ const MainPage = () => {
                   required
                   placeholder="Enter your username"
                 />
+                <p className="text-xs text-gray-500 mt-1">
+                  2-20 characters, letters/numbers only, no bad words
+                </p>
               </div>
               <div>
                 <label className="block mb-2 font-medium text-gray-700">

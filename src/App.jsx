@@ -8,7 +8,11 @@ import { useDarkMode } from './hooks';
 // Components
 import MainPage from './MainPage.jsx';
 import ChatPage from './ChatPage.jsx';
-import MyCodes from './MyCodes.jsx';
+import MyCodes from './MyCodesNew.jsx';
+import BouncingBallGame from './BouncingBallGame.jsx';
+import VipCodes from './VipCodes.jsx';
+import CProgramming from './CProgramming.jsx';
+import HTMLProgramming from './HTMLProgramming.jsx';
 import Loader from './components/Loader.jsx';
 
 import './app.css'; // or './App.css'
@@ -71,6 +75,10 @@ function App() {
         <Route path="/" element={<MainPage />} />
         <Route path="/chat" element={<ChatPage />} />
         <Route path="/codes" element={<MyCodes />} />
+        <Route path="/codes/bouncing-ball" element={<BouncingBallGame />} />
+        <Route path="/codes/vip" element={<VipCodes />} />
+        <Route path="/codes/c-programming" element={<CProgramming />} />
+        <Route path="/codes/html-programming" element={<HTMLProgramming />} />
       </Routes>
     </div>
   );
