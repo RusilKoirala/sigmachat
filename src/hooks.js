@@ -13,13 +13,22 @@ export function useFirestoreQuery(query) {
 
   useEffect(() => {
     if (!queryRef.current) return;
-    const unsubscribe = onSnapshot(queryRef.current, querySnapshot => {
-      const data = querySnapshot.docs.map(doc => ({
-        ...doc.data(),
-        id: doc.id,
-      }));
-      setDocs(data);
-    });
+
+    const unsubscribe = onSnapshot(
+      queryRef.current,
+      (querySnapshot) => {
+        const data = querySnapshot.docs.map(doc => ({
+          ...doc.data(),
+          id: doc.id,
+        }));
+        console.log('Real-time update received:', data.length, 'messages');
+        setDocs(data);
+      },
+      (error) => {
+        console.error('Error in real-time listener:', error);
+      }
+    );
+
     return unsubscribe;
   }, [query]);
 

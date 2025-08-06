@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useRef, useState } from 'react';
+import React, { useContext, useEffect, useRef, useState, useMemo } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { UsernameContext } from './usernameContext.jsx';
 import { useFirestoreQuery, getAvatarUrl, useRequireUsername } from './hooks.js';
@@ -77,7 +77,10 @@ const ChatPage = () => {
     localStorage.removeItem(`sigmachat-admin-time-${username}`);
   };
   // Chronological order: oldest at top, newest at bottom - increased limit for more history
-  const messagesQuery = query(messagesRef, orderBy('createdAt', 'asc'), limit(200));
+  const messagesQuery = useMemo(() =>
+    query(messagesRef, orderBy('createdAt', 'asc'), limit(200)),
+    [messagesRef]
+  );
   const messages = useFirestoreQuery(messagesQuery);
   const bottomListRef = useRef();
   const chatContainerRef = useRef();
