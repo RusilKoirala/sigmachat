@@ -13,6 +13,7 @@ import BouncingBallGame from './BouncingBallGame.jsx';
 import CProgramming, { VipCodes } from './CProgramming.jsx';
 import HTMLProgramming from './HTMLProgramming.jsx';
 import Loader from './components/Loader.jsx';
+import AdBlockerOverlay from './components/AdBlockerOverlay.jsx';
 
 import './app.css'; // or './App.css'
 
@@ -70,6 +71,9 @@ function App() {
 
   return (
     <div className={`app ${darkMode ? 'dark' : 'light'}-mode`}>
+      {/* Ad Blocker Overlay - Blocks entire app */}
+      <AdBlockerOverlay />
+
       <Routes>
         <Route path="/" element={<MainPage />} />
         <Route path="/chat" element={<ChatPage />} />

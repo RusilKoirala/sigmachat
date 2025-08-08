@@ -358,8 +358,8 @@ int main() {
       {/* Main Content with Sidebar */}
       <div className="pt-20 flex">
         {/* Left Sidebar - Ad */}
-        <aside className="hidden lg:block w-44 bg-gray-950 border-r border-gray-800 min-h-screen">
-          <div className="sticky top-20 p-2 space-y-2 max-h-screen overflow-hidden">
+        <aside className="hidden lg:block w-44 bg-gray-950 border-r border-gray-800 fixed left-0 top-16 h-screen z-10">
+          <div className="p-2 space-y-2 h-full overflow-hidden">
             {/* Main Ad - 160x600 */}
             <AdBanner1 className="mx-auto" />
 
@@ -369,7 +369,7 @@ int main() {
         </aside>
 
         {/* Content Area */}
-        <div className="flex-1 px-4 max-w-6xl mx-auto">
+        <div className="flex-1 px-4 max-w-6xl mx-auto lg:ml-44">
         {/* Back Button */}
         <Link 
           to="/codes/vip"

@@ -7,6 +7,7 @@ import MessageRenderer from './components/MessageRenderer.jsx';
 import SigmaIcon from './components/SigmaIcon.jsx';
 import AdBanner1 from './components/AdBanner1.jsx';
 import AdBanner2 from './components/AdBanner2.jsx';
+
 import { containsProfanity, getBadWordWarning } from './utils/profanityFilter';
 import { getFirestore, collection, addDoc, updateDoc, doc, serverTimestamp, arrayUnion, query, orderBy, limit, setDoc, deleteDoc, onSnapshot, getDocs } from 'firebase/firestore';
 import { initializeApp } from 'firebase/app';
@@ -523,8 +524,8 @@ Blocks: \`\`\`code\`\`\``;
     <div className="flex flex-col h-screen bg-black text-white">
       {/* Navigation Bar */}
       <nav className="fixed top-0 left-0 right-0 z-50 bg-black bg-opacity-90 backdrop-blur-sm border-b border-gray-800">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-16">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 lg:ml-44">
+          <div className="flex justify-between items-center h-14">
             <div className="flex items-center space-x-6">
               <Link to="/" className="text-white text-xl font-bold tracking-wider flex items-center space-x-2">
                 <SigmaIcon className="w-6 h-6" />
@@ -589,18 +590,22 @@ Blocks: \`\`\`code\`\`\``;
       {/* Main content with sidebar */}
       <main className="flex-1 flex h-full pt-16 relative">
         {/* Left Sidebar - Ad */}
-        <aside className="hidden lg:block w-44 bg-gray-950 border-r border-gray-800">
-          <div className="sticky top-20 p-2 space-y-2 max-h-screen overflow-hidden">
+        <aside className="hidden lg:block w-44 bg-gray-950 border-r border-gray-800 fixed left-0 top-14 z-10" style={{ height: 'calc(100vh - 56px)' }}>
+          <div className="p-2 space-y-2 h-full overflow-hidden flex flex-col">
             {/* Main Ad - 160x600 */}
-            <AdBanner1 className="mx-auto" />
+            <div className="flex-shrink-0">
+              <AdBanner1 className="mx-auto" />
+            </div>
 
             {/* Small Ad Below - 160x300 */}
-            <AdBanner2 className="mx-auto" />
+            <div className="flex-shrink-0">
+              <AdBanner2 className="mx-auto" />
+            </div>
           </div>
         </aside>
 
         {/* Chat area */}
-        <div className="flex-1 flex flex-col h-full relative">
+        <div className="flex-1 flex flex-col h-full relative lg:ml-44 pt-14">
         <div
           ref={chatContainerRef}
           className="flex-1 px-4 py-4 flex flex-col space-y-3 overflow-y-auto scrollbar-hide"
@@ -678,7 +683,7 @@ Blocks: \`\`\`code\`\`\``;
         {/* Message input */}
         <form
           onSubmit={handleOnSubmit}
-          className="flex items-center p-4 border-t border-gray-800 bg-black"
+          className="flex items-center gap-3 p-4 border-t border-gray-800 bg-black"
         >
           <div className="flex-1 relative">
             {isAdmin && (
@@ -690,7 +695,7 @@ Blocks: \`\`\`code\`\`\``;
               ref={inputRef}
               type="text"
               className={classNames(
-                "w-full bg-gray-900 text-white rounded-lg px-4 py-3 mr-4 focus:outline-none focus:ring-1 border",
+                "w-full bg-gray-900 text-white rounded-lg px-4 py-3 focus:outline-none focus:ring-1 border transition-all",
                 isAdmin
                   ? "focus:ring-red-500 border-red-600"
                   : "focus:ring-gray-500 border-gray-700"
@@ -705,12 +710,26 @@ Blocks: \`\`\`code\`\`\``;
           </div>
           <button
             type="submit"
-            className="bg-gray-800 text-white font-medium py-3 px-6 rounded-lg hover:bg-gray-700 transition-colors disabled:opacity-50 border border-gray-700"
+            className={classNames(
+              "flex items-center justify-center py-3 px-4 rounded-lg font-medium transition-all disabled:opacity-50 border",
+              loading || !newMessage.trim()
+                ? "bg-gray-800 text-gray-400 border-gray-700 cursor-not-allowed"
+                : isAdmin
+                ? "bg-red-600 hover:bg-red-700 text-white border-red-600 hover:border-red-700"
+                : "bg-blue-600 hover:bg-blue-700 text-white border-blue-600 hover:border-blue-700"
+            )}
             disabled={loading || !newMessage.trim()}
           >
-            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
-            </svg>
+            {loading ? (
+              <svg className="animate-spin w-5 h-5" fill="none" viewBox="0 0 24 24">
+                <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+              </svg>
+            ) : (
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
+              </svg>
+            )}
           </button>
         </form>
         {error && <div className="text-red-400 text-center py-2 text-sm border border-red-800 bg-red-950 rounded-lg mx-4 mb-2">{error}</div>}
