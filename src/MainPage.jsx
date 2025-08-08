@@ -81,9 +81,9 @@ const MainPage = () => {
       </nav>
 
       {/* Hero Section */}
-      <section className="relative h-screen bg-black text-white flex items-center justify-center">
+      <section className="relative h-screen bg-black text-white flex flex-col items-center justify-center">
         {/* Main Content */}
-        <div className="text-center px-4">
+        <div className="text-center px-4 flex-1 flex flex-col justify-center">
           <h1 className="text-8xl md:text-9xl font-black mb-4 tracking-tighter">
             SIGMA
           </h1>
@@ -96,6 +96,47 @@ const MainPage = () => {
           >
             enter
           </button>
+        </div>
+
+        {/* Disclaimer - Code Window Style */}
+        <div className="absolute bottom-8 left-0 right-0 px-4">
+          <div className="max-w-3xl mx-auto bg-gray-900 border border-gray-700 rounded-lg shadow-2xl">
+            {/* Window Header */}
+            <div className="flex items-center justify-between px-4 py-2 bg-gray-800 border-b border-gray-700 rounded-t-lg">
+              <div className="flex items-center space-x-2">
+                <div className="w-3 h-3 bg-red-500 rounded-full"></div>
+                <div className="w-3 h-3 bg-yellow-500 rounded-full"></div>
+                <div className="w-3 h-3 bg-green-500 rounded-full"></div>
+              </div>
+              <div className="text-xs text-gray-400 font-mono">disclaimer.txt</div>
+              <div className="w-12"></div>
+            </div>
+
+            {/* Content */}
+            <div className="p-4 font-mono text-sm">
+              <div className="text-gray-500 mb-2">
+                <span className="text-gray-600">01</span> <span className="text-blue-400">/**</span>
+              </div>
+              <div className="text-gray-500 mb-2">
+                <span className="text-gray-600">02</span> <span className="text-blue-400"> * DISCLAIMER</span>
+              </div>
+              <div className="text-gray-500 mb-2">
+                <span className="text-gray-600">03</span> <span className="text-blue-400"> */</span>
+              </div>
+              <div className="text-gray-300 mb-1">
+                <span className="text-gray-600">04</span> <span className="text-yellow-400">Users</span> are responsible for their own <span className="text-green-400">content</span> and <span className="text-green-400">actions</span>.
+              </div>
+              <div className="text-gray-300 mb-1">
+                <span className="text-gray-600">05</span> We provide basic <span className="text-purple-400">moderation</span> but don't monitor or take
+              </div>
+              <div className="text-gray-300 mb-1">
+                <span className="text-gray-600">06</span> responsibility for <span className="text-red-400">user behavior</span>. Continued use implies
+              </div>
+              <div className="text-gray-300">
+                <span className="text-gray-600">07</span> <span className="text-blue-400">agreement</span>.
+              </div>
+            </div>
+          </div>
         </div>
       </section>
 
