@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import SigmaIcon from './components/SigmaIcon.jsx';
+import AdBanner1 from './components/AdBanner1.jsx';
+import AdBanner2 from './components/AdBanner2.jsx';
 
 // Create VipCodes component
 const VipCodes = () => {
@@ -353,8 +355,21 @@ int main() {
         </div>
       </nav>
 
-      {/* Main Content */}
-      <div className="pt-20 px-4 max-w-6xl mx-auto">
+      {/* Main Content with Sidebar */}
+      <div className="pt-20 flex">
+        {/* Left Sidebar - Ad */}
+        <aside className="hidden lg:block w-44 bg-gray-950 border-r border-gray-800 min-h-screen">
+          <div className="sticky top-20 p-2 space-y-2 max-h-screen overflow-hidden">
+            {/* Main Ad - 160x600 */}
+            <AdBanner1 className="mx-auto" />
+
+            {/* Small Ad Below - 160x300 */}
+            <AdBanner2 className="mx-auto" />
+          </div>
+        </aside>
+
+        {/* Content Area */}
+        <div className="flex-1 px-4 max-w-6xl mx-auto">
         {/* Back Button */}
         <Link 
           to="/codes/vip"
@@ -510,6 +525,7 @@ int main() {
         {/* Footer */}
         <div className="text-center py-8">
           <p className="text-xs text-gray-500 font-light">Made By OG Rusil</p>
+        </div>
         </div>
       </div>
     </div>

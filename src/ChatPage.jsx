@@ -5,6 +5,8 @@ import { useFirestoreQuery, getAvatarUrl, useRequireUsername } from './hooks.js'
 import Loader from './components/Loader.jsx';
 import MessageRenderer from './components/MessageRenderer.jsx';
 import SigmaIcon from './components/SigmaIcon.jsx';
+import AdBanner1 from './components/AdBanner1.jsx';
+import AdBanner2 from './components/AdBanner2.jsx';
 import { containsProfanity, getBadWordWarning } from './utils/profanityFilter';
 import { getFirestore, collection, addDoc, updateDoc, doc, serverTimestamp, arrayUnion, query, orderBy, limit, setDoc, deleteDoc, onSnapshot, getDocs } from 'firebase/firestore';
 import { initializeApp } from 'firebase/app';
@@ -173,7 +175,7 @@ const ChatPage = () => {
           const minutes = Math.floor(remaining / 60);
           const seconds = remaining % 60;
           const timeDisplay = minutes > 0 ? `${minutes}m ${seconds}s` : `${seconds}s`;
-          setError(`🚫 Spam cooldown: ${timeDisplay} remaining`);
+          setError(`Spam cooldown: ${timeDisplay} remaining`);
         } else {
           // Penalty expired
           setSpamPenalty(0);
@@ -254,16 +256,16 @@ const ChatPage = () => {
           let penaltyDuration;
           if (newStrikes === 1) {
             penaltyDuration = 30000; // 30 seconds
-            setError('⚠️ Slow down! 30 second cooldown for spamming.');
+            setError('Slow down. 30 second cooldown for spamming.');
           } else if (newStrikes === 2) {
             penaltyDuration = 60000; // 1 minute
-            setError('🚫 Spam detected! 1 minute cooldown.');
+            setError('Spam detected. 1 minute cooldown.');
           } else if (newStrikes === 3) {
             penaltyDuration = 300000; // 5 minutes
-            setError('🔒 Excessive spam! 5 minute cooldown.');
+            setError('Excessive spam. 5 minute cooldown.');
           } else {
             penaltyDuration = 600000; // 10 minutes
-            setError('⛔ Severe spam violation! 10 minute cooldown.');
+            setError('Severe spam violation. 10 minute cooldown.');
           }
 
           setSpamPenalty(now + penaltyDuration);
@@ -321,7 +323,7 @@ const ChatPage = () => {
       switch (cmd) {
         case 'help':
         case 'commands':
-          responseMessage = `📋 **Commands**
+          responseMessage = `Commands
 
 \`/help\` - Show commands
 \`/info\` - About SigmaChat
@@ -329,23 +331,16 @@ const ChatPage = () => {
 \`/rules\` - Chat rules
 \`/bold\` - Bold text help
 \`/italic\` - Italic text help
-\`/code\` - Code format help${isAdmin ? '\n\n**Admin:**\n`/clear` - Clear chat\n`/kick [user]` - Kick user\n`/logout` - End admin' : ''}`;
+\`/code\` - Code format help${isAdmin ? '\n\nAdmin:\n`/clear` - Clear chat\n`/kick [user]` - Kick user\n`/logout` - End admin' : ''}`;
           break;
 
         case 'info':
-          responseMessage = `ℹ️ **SigmaChat**
-
-A shit chat app for my frds
-• Real-time messaging
-• Markdown support
-• No registration needed
-
-Version: 1.0.0`;
+          responseMessage = `SigmaChat\n\nA shit chat app for my frds\n• Real-time messaging\n• Markdown support\n• No registration needed\n\nVersion: 1.0.0`;
           break;
 
         case 'ping':
           const startTime = Date.now();
-          responseMessage = `🏓 Pong! ${Date.now() - startTime}ms`;
+          responseMessage = `Pong! ${Date.now() - startTime}ms`;
           break;
 
         case 'bold':
@@ -366,13 +361,7 @@ Blocks: \`\`\`code\`\`\``;
           break;
 
         case 'rules':
-          responseMessage = `📋 **Chat Rules:**
-
-• Be respectful to everyone
-• No spam or flooding
-• No bad language or profanity
-• Keep conversations friendly
-• Have fun! 😊`;
+          responseMessage = `Chat Rules:\n\n• Be respectful to everyone\n• No spam or flooding\n• No bad language or profanity\n• Keep conversations friendly`;
           break;
 
         default:
@@ -412,13 +401,13 @@ Blocks: \`\`\`code\`\`\``;
 
       switch (command) {
         case 'clear':
-          commandMessage = '🔧 Admin cleared the chat';
+          commandMessage = 'Admin cleared the chat';
           shouldClearChat = true;
           break;
         case 'kick':
           if (args.length > 0) {
             const targetUser = args[0];
-            commandMessage = `🔧 Admin kicked user: ${targetUser}`;
+            commandMessage = `Admin kicked user: ${targetUser}`;
           } else {
             setError('Usage: /kick [username]');
             setNewMessage('');
@@ -428,21 +417,21 @@ Blocks: \`\`\`code\`\`\``;
         case 'ban':
           if (args.length > 0) {
             const targetUser = args[0];
-            commandMessage = `🔧 Admin banned user: ${targetUser}`;
+            commandMessage = `Admin banned user: ${targetUser}`;
           } else {
-            commandMessage = '🔧 Admin used ban command';
+            commandMessage = 'Admin used ban command';
           }
           break;
         case 'mute':
           if (args.length > 0) {
             const targetUser = args[0];
-            commandMessage = `🔧 Admin muted user: ${targetUser}`;
+            commandMessage = `Admin muted user: ${targetUser}`;
           } else {
-            commandMessage = '🔧 Admin used mute command';
+            commandMessage = 'Admin used mute command';
           }
           break;
         default:
-          commandMessage = `🔧 Admin executed: /${trimmedMessage.slice(1)}`;
+          commandMessage = `Admin executed: /${trimmedMessage.slice(1)}`;
       }
 
       setLoading(true);
@@ -597,8 +586,21 @@ Blocks: \`\`\`code\`\`\``;
         </div>
       )}
 
-      {/* Chat area */}
-      <main className="flex-1 flex flex-col h-full pt-16 relative">
+      {/* Main content with sidebar */}
+      <main className="flex-1 flex h-full pt-16 relative">
+        {/* Left Sidebar - Ad */}
+        <aside className="hidden lg:block w-44 bg-gray-950 border-r border-gray-800">
+          <div className="sticky top-20 p-2 space-y-2 max-h-screen overflow-hidden">
+            {/* Main Ad - 160x600 */}
+            <AdBanner1 className="mx-auto" />
+
+            {/* Small Ad Below - 160x300 */}
+            <AdBanner2 className="mx-auto" />
+          </div>
+        </aside>
+
+        {/* Chat area */}
+        <div className="flex-1 flex flex-col h-full relative">
         <div
           ref={chatContainerRef}
           className="flex-1 px-4 py-4 flex flex-col space-y-3 overflow-y-auto scrollbar-hide"
@@ -628,18 +630,18 @@ Blocks: \`\`\`code\`\`\``;
                     <img
                       src={msg.avatarUrl}
                       alt={msg.username}
-                      className="w-10 h-10 rounded-full mr-3 shadow-lg"
+                      className="w-10 h-10 rounded-full mr-3"
                     />
                     <div className={classNames(
-                      'rounded-2xl px-4 py-3 max-w-md shadow-lg',
+                      'rounded-lg px-4 py-3 max-w-md',
                       msg.username === username
-                        ? 'bg-gray-900 text-white border border-gray-700 rounded-br-md'
-                        : 'bg-black text-white border border-gray-800 rounded-bl-md'
+                        ? 'bg-gray-900 text-white border border-gray-700'
+                        : 'bg-black text-white border border-gray-800'
                     )}>
-                      <div className="flex items-center mb-1">
-                        <span className="font-bold mr-2 text-sm">{msg.username}</span>
+                      <div className="flex items-center mb-2">
+                        <span className="font-medium mr-2 text-sm text-gray-300 tracking-wide">{msg.username}</span>
                         {msg.createdAt?.seconds && (
-                          <span className="text-xs opacity-60">
+                          <span className="text-xs text-gray-500">
                             {new Date(msg.createdAt.seconds * 1000).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
                           </span>
                         )}
@@ -663,15 +665,13 @@ Blocks: \`\`\`code\`\`\``;
         {showScrollButton && (
           <button
             onClick={scrollToBottom}
-            className={`fixed bottom-20 right-6 bg-white text-black p-3 rounded-full shadow-lg hover:bg-gray-200 transition-all transform hover:scale-110 z-40 ${newMessageIndicator ? 'animate-pulse ring-4 ring-blue-400' : ''}`}
+            className={`fixed bottom-20 right-6 bg-gray-900 border border-gray-700 text-white p-3 rounded-full shadow-lg hover:bg-gray-800 transition-all z-40 ${newMessageIndicator ? 'ring-2 ring-blue-500' : ''}`}
           >
-            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
             </svg>
             {newMessageIndicator && (
-              <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center animate-bounce">
-                !
-              </span>
+              <span className="sr-only">New messages</span>
             )}
           </button>
         )}
@@ -682,7 +682,7 @@ Blocks: \`\`\`code\`\`\``;
         >
           <div className="flex-1 relative">
             {isAdmin && (
-              <div className="absolute -top-8 left-0 bg-red-600 text-white px-2 py-1 rounded text-xs">
+              <div className="absolute -top-8 left-0 border border-red-600 text-red-400 px-2 py-1 rounded text-xs tracking-wider">
                 ADMIN MODE
               </div>
             )}
@@ -690,10 +690,10 @@ Blocks: \`\`\`code\`\`\``;
               ref={inputRef}
               type="text"
               className={classNames(
-                "w-full bg-gray-900 text-white rounded-full px-6 py-3 mr-4 focus:outline-none focus:ring-2 border",
+                "w-full bg-gray-900 text-white rounded-lg px-4 py-3 mr-4 focus:outline-none focus:ring-1 border",
                 isAdmin
                   ? "focus:ring-red-500 border-red-600"
-                  : "focus:ring-white border-gray-700"
+                  : "focus:ring-gray-500 border-gray-700"
               )}
               placeholder={isAdmin ? "Type message or /command..." : "Type your message..."}
               value={newMessage}
@@ -705,13 +705,16 @@ Blocks: \`\`\`code\`\`\``;
           </div>
           <button
             type="submit"
-            className="bg-white text-black font-bold py-3 px-6 rounded-full hover:bg-gray-200 transition-colors disabled:opacity-50"
+            className="bg-gray-800 text-white font-medium py-3 px-6 rounded-lg hover:bg-gray-700 transition-colors disabled:opacity-50 border border-gray-700"
             disabled={loading || !newMessage.trim()}
           >
-            Send
+            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
+            </svg>
           </button>
         </form>
-        {error && <div className="text-red-500 text-center py-2">{error}</div>}
+        {error && <div className="text-red-400 text-center py-2 text-sm border border-red-800 bg-red-950 rounded-lg mx-4 mb-2">{error}</div>}
+        </div>
       </main>
     </div>
   );
