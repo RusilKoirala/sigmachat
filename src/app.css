@@ -40,4 +40,87 @@ html {
   animation: fadeInUp 0.6s ease-out;
 }
 
+/* Responsive utilities for consistent UI across all resolutions */
+
+/* Mobile-first responsive breakpoints */
+@media (max-width: 640px) {
+  /* Small screens (phones) */
+  .responsive-text-large {
+    font-size: clamp(2rem, 8vw, 4rem) !important;
+  }
+
+  .responsive-text-medium {
+    font-size: clamp(1rem, 4vw, 1.5rem) !important;
+  }
+
+  .mobile-padding {
+    padding-left: 1rem !important;
+    padding-right: 1rem !important;
+  }
+}
+
+@media (max-width: 768px) {
+  /* Tablets and small laptops */
+  .tablet-spacing {
+    margin-left: 0 !important;
+  }
+
+  /* Ensure ads don't overflow on smaller screens */
+  .ad-container {
+    max-width: 100% !important;
+    overflow: hidden;
+  }
+}
+
+@media (max-width: 1024px) {
+  /* Medium screens */
+  .lg-hidden {
+    display: none !important;
+  }
+}
+
+/* High resolution displays (4K, etc.) */
+@media (min-width: 1920px) {
+  .container {
+    max-width: 1800px;
+    margin: 0 auto;
+  }
+
+  /* Scale up text slightly for very large screens */
+  .ultra-wide-text {
+    font-size: 1.1em;
+  }
+}
+
+/* Ensure minimum heights work on all devices */
+.min-h-screen {
+  min-height: 100vh;
+  min-height: 100dvh; /* Dynamic viewport height for mobile browsers */
+}
+
+/* Responsive ad containers */
+.ad-responsive {
+  width: 100%;
+  max-width: 160px;
+  margin: 0 auto;
+}
+
+@media (max-width: 1024px) {
+  .ad-responsive {
+    max-width: 140px;
+  }
+}
+
+@media (max-width: 768px) {
+  .ad-responsive {
+    max-width: 120px;
+  }
+}
+
+/* Ensure consistent spacing across resolutions */
+.responsive-container {
+  padding-left: clamp(1rem, 5vw, 2rem);
+  padding-right: clamp(1rem, 5vw, 2rem);
+}
+
 /* You can add more custom styles or Tailwind overrides here. */

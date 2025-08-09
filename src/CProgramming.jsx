@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import SigmaIcon from './components/SigmaIcon.jsx';
-import AdBanner1 from './components/AdBanner1.jsx';
-import AdBanner2 from './components/AdBanner2.jsx';
+import { AdBanner1, AdBanner2 } from './components/AdManager.jsx';
 
 // Create VipCodes component
 const VipCodes = () => {
@@ -355,21 +354,25 @@ int main() {
         </div>
       </nav>
 
-      {/* Main Content with Sidebar */}
-      <div className="pt-20 flex">
-        {/* Left Sidebar - Ad */}
-        <aside className="hidden lg:block w-44 bg-gray-950 border-r border-gray-800 fixed left-0 top-16 h-screen z-10">
-          <div className="p-2 space-y-2 h-full overflow-hidden">
-            {/* Main Ad - 160x600 */}
-            <AdBanner1 className="mx-auto" />
+      {/* Responsive Main Content with Sidebar */}
+      <div className="pt-20 flex flex-col lg:flex-row">
+        {/* Responsive Ad Sidebar */}
+        <aside className="w-full lg:w-44 xl:w-48 bg-gray-950 border-b lg:border-b-0 lg:border-r border-gray-800 lg:fixed lg:left-0 lg:top-16 lg:h-screen lg:z-10">
+          <div className="p-2 lg:space-y-2 h-auto lg:h-full overflow-hidden flex flex-row lg:flex-col gap-2 lg:gap-0 justify-center lg:justify-start">
+            {/* Main Ad - Responsive */}
+            <div className="w-1/2 lg:w-full">
+              <AdBanner1 className="mx-auto" show={true} />
+            </div>
 
-            {/* Small Ad Below - 160x300 */}
-            <AdBanner2 className="mx-auto" />
+            {/* Small Ad Below - Responsive */}
+            <div className="w-1/2 lg:w-full">
+              <AdBanner2 className="mx-auto" show={true} />
+            </div>
           </div>
         </aside>
 
-        {/* Content Area */}
-        <div className="flex-1 px-4 max-w-6xl mx-auto lg:ml-44">
+        {/* Content Area - Responsive */}
+        <div className="flex-1 px-4 max-w-6xl mx-auto lg:ml-44 xl:ml-48">
         {/* Back Button */}
         <Link 
           to="/codes/vip"

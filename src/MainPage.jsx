@@ -75,64 +75,70 @@ const MainPage = () => {
               >
                 Code
               </Link>
+              <Link
+                to="/bhailang"
+                className="text-gray-300 hover:text-white transition-colors duration-200 font-medium"
+              >
+                Bhai Lang
+              </Link>
             </div>
           </div>
         </div>
       </nav>
 
-      {/* Hero Section */}
-      <section className="relative h-screen bg-black text-white flex flex-col items-center justify-center">
+      {/* Hero Section - Responsive */}
+      <section className="relative min-h-screen bg-black text-white flex flex-col items-center justify-center px-4">
         {/* Main Content */}
-        <div className="text-center px-4 flex-1 flex flex-col justify-center">
-          <h1 className="text-8xl md:text-9xl font-black mb-4 tracking-tighter">
+        <div className="text-center flex-1 flex flex-col justify-center max-w-4xl mx-auto">
+          <h1 className="text-4xl sm:text-6xl md:text-8xl lg:text-9xl font-black mb-4 tracking-tighter">
             SIGMA
           </h1>
-          <h2 className="text-2xl md:text-3xl font-light mb-8 text-gray-400">
+          <h2 className="text-lg sm:text-xl md:text-2xl lg:text-3xl font-light mb-8 text-gray-400">
             A shit chat app for my frds
           </h2>
           <button
             onClick={() => setShowLogin(true)}
-            className="px-6 py-3 border border-white text-white hover:bg-white hover:text-black transition-all duration-200"
+            className="px-6 py-3 border border-white text-white hover:bg-white hover:text-black transition-all duration-200 text-sm sm:text-base"
           >
             enter
           </button>
         </div>
 
-        {/* Disclaimer - Code Window Style */}
-        <div className="absolute bottom-8 left-0 right-0 px-4">
-          <div className="max-w-3xl mx-auto bg-gray-900 border border-gray-700 rounded-lg shadow-2xl">
+        {/* Disclaimer - Responsive Code Window Style */}
+        <div className="absolute bottom-4 sm:bottom-8 left-0 right-0 px-2 sm:px-4">
+          <div className="max-w-xs sm:max-w-2xl lg:max-w-3xl mx-auto bg-gray-900 border border-gray-700 rounded-lg shadow-2xl">
             {/* Window Header */}
-            <div className="flex items-center justify-between px-4 py-2 bg-gray-800 border-b border-gray-700 rounded-t-lg">
-              <div className="flex items-center space-x-2">
-                <div className="w-3 h-3 bg-red-500 rounded-full"></div>
-                <div className="w-3 h-3 bg-yellow-500 rounded-full"></div>
-                <div className="w-3 h-3 bg-green-500 rounded-full"></div>
+            <div className="flex items-center justify-between px-2 sm:px-4 py-2 bg-gray-800 border-b border-gray-700 rounded-t-lg">
+              <div className="flex items-center space-x-1 sm:space-x-2">
+                <div className="w-2 h-2 sm:w-3 sm:h-3 bg-red-500 rounded-full"></div>
+                <div className="w-2 h-2 sm:w-3 sm:h-3 bg-yellow-500 rounded-full"></div>
+                <div className="w-2 h-2 sm:w-3 sm:h-3 bg-green-500 rounded-full"></div>
               </div>
-              <div className="text-xs text-gray-400 font-mono">disclaimer.txt</div>
-              <div className="w-12"></div>
+              <div className="text-xs text-gray-400 font-mono hidden sm:block">disclaimer.txt</div>
+              <div className="w-6 sm:w-12"></div>
             </div>
 
-            {/* Content */}
-            <div className="p-4 font-mono text-sm">
-              <div className="text-gray-500 mb-2">
+            {/* Content - Responsive */}
+            <div className="p-2 sm:p-4 font-mono text-xs sm:text-sm">
+              <div className="text-gray-500 mb-1 sm:mb-2">
                 <span className="text-gray-600">01</span> <span className="text-blue-400">/**</span>
               </div>
-              <div className="text-gray-500 mb-2">
+              <div className="text-gray-500 mb-1 sm:mb-2">
                 <span className="text-gray-600">02</span> <span className="text-blue-400"> * DISCLAIMER</span>
               </div>
-              <div className="text-gray-500 mb-2">
+              <div className="text-gray-500 mb-1 sm:mb-2">
                 <span className="text-gray-600">03</span> <span className="text-blue-400"> */</span>
               </div>
-              <div className="text-gray-300 mb-1">
+              <div className="text-gray-300 mb-1 leading-tight sm:leading-normal">
                 <span className="text-gray-600">04</span> <span className="text-yellow-400">Users</span> are responsible for their own <span className="text-green-400">content</span> and <span className="text-green-400">actions</span>.
               </div>
-              <div className="text-gray-300 mb-1">
+              <div className="text-gray-300 mb-1 leading-tight sm:leading-normal">
                 <span className="text-gray-600">05</span> We provide basic <span className="text-purple-400">moderation</span> but don't monitor or take
               </div>
-              <div className="text-gray-300 mb-1">
+              <div className="text-gray-300 mb-1 leading-tight sm:leading-normal">
                 <span className="text-gray-600">06</span> responsibility for <span className="text-red-400">user behavior</span>. Continued use implies
               </div>
-              <div className="text-gray-300">
+              <div className="text-gray-300 leading-tight sm:leading-normal">
                 <span className="text-gray-600">07</span> <span className="text-blue-400">agreement</span>.
               </div>
             </div>
@@ -141,13 +147,42 @@ const MainPage = () => {
       </section>
 
       {/* Features Section */}
-      <section className="py-20 bg-white text-black">
-        <div className="text-center">
-          <h2 className="text-4xl font-bold mb-8">Features</h2>
-          <p className="text-6xl font-light text-gray-400 mb-12">None</p>
-          <p className="text-sm text-gray-500 font-light">
-            Made By OG Rusil
-          </p>
+      <section className="py-20 bg-gradient-to-b from-white to-gray-100 text-black">
+        <div className="max-w-6xl mx-auto px-4">
+          <div className="text-center mb-16">
+            <h2 className="text-5xl font-bold mb-6 bg-gradient-to-r from-black to-gray-600 bg-clip-text text-transparent">
+              Features
+            </h2>
+            <p className="text-7xl font-light text-gray-300 mb-8 tracking-wider">None</p>
+            <p className="text-lg text-gray-600 max-w-2xl mx-auto leading-relaxed">
+              Just a simple, no-nonsense chat for friends. No fancy features, no bloat, no BS.
+            </p>
+          </div>
+
+          {/* Feature Grid */}
+          <div className="grid md:grid-cols-3 gap-8 mb-16">
+            <div className="text-center p-6 bg-white rounded-lg shadow-sm border border-gray-200">
+              <div className="text-3xl mb-4">💬</div>
+              <h3 className="text-xl font-semibold mb-2">Real-time Chat</h3>
+              <p className="text-gray-600">Instant messaging with your friends</p>
+            </div>
+            <div className="text-center p-6 bg-white rounded-lg shadow-sm border border-gray-200">
+              <div className="text-3xl mb-4">🔒</div>
+              <h3 className="text-xl font-semibold mb-2">Basic Moderation</h3>
+              <p className="text-gray-600">Simple spam protection and filters</p>
+            </div>
+            <div className="text-center p-6 bg-white rounded-lg shadow-sm border border-gray-200">
+              <div className="text-3xl mb-4">⚡</div>
+              <h3 className="text-xl font-semibold mb-2">Fast & Simple</h3>
+              <p className="text-gray-600">No unnecessary features or complexity</p>
+            </div>
+          </div>
+
+          <div className="text-center">
+            <p className="text-sm text-gray-500 font-medium tracking-wide">
+              Made with ❤️ by OG Rusil
+            </p>
+          </div>
         </div>
       </section>
 

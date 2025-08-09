@@ -12,8 +12,10 @@ import MyCodes from './MyCodesNew.jsx';
 import BouncingBallGame from './BouncingBallGame.jsx';
 import CProgramming, { VipCodes } from './CProgramming.jsx';
 import HTMLProgramming from './HTMLProgramming.jsx';
+import BhaiLang from './BhaiLang.jsx';
 import Loader from './components/Loader.jsx';
 import AdBlockerOverlay from './components/AdBlockerOverlay.jsx';
+import { AdProvider } from './components/AdManager.jsx';
 
 import './app.css'; // or './App.css'
 
@@ -70,20 +72,23 @@ function App() {
   const ThemeIcon = darkMode ? SunIcon : MoonIcon;
 
   return (
-    <div className={`app ${darkMode ? 'dark' : 'light'}-mode`}>
-      {/* Ad Blocker Overlay - Blocks entire app */}
-      <AdBlockerOverlay />
+    <AdProvider>
+      <div className={`app ${darkMode ? 'dark' : 'light'}-mode`}>
+        {/* Ad Blocker Overlay - Blocks entire app */}
+        <AdBlockerOverlay />
 
-      <Routes>
-        <Route path="/" element={<MainPage />} />
-        <Route path="/chat" element={<ChatPage />} />
-        <Route path="/codes" element={<MyCodes />} />
-        <Route path="/codes/bouncing-ball" element={<BouncingBallGame />} />
-        <Route path="/codes/vip" element={<VipCodes />} />
-        <Route path="/codes/c-programming" element={<CProgramming />} />
-        <Route path="/codes/html-programming" element={<HTMLProgramming />} />
-      </Routes>
-    </div>
+        <Routes>
+          <Route path="/" element={<MainPage />} />
+          <Route path="/chat" element={<ChatPage />} />
+          <Route path="/codes" element={<MyCodes />} />
+          <Route path="/codes/bouncing-ball" element={<BouncingBallGame />} />
+          <Route path="/codes/vip" element={<VipCodes />} />
+          <Route path="/codes/c-programming" element={<CProgramming />} />
+          <Route path="/codes/html-programming" element={<HTMLProgramming />} />
+          <Route path="/bhailang" element={<BhaiLang />} />
+        </Routes>
+      </div>
+    </AdProvider>
   );
 }
 

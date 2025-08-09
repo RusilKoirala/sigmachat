@@ -5,8 +5,7 @@ import { useFirestoreQuery, getAvatarUrl, useRequireUsername } from './hooks.js'
 import Loader from './components/Loader.jsx';
 import MessageRenderer from './components/MessageRenderer.jsx';
 import SigmaIcon from './components/SigmaIcon.jsx';
-import AdBanner1 from './components/AdBanner1.jsx';
-import AdBanner2 from './components/AdBanner2.jsx';
+import { AdBanner1, AdBanner2 } from './components/AdManager.jsx';
 
 import { containsProfanity, getBadWordWarning } from './utils/profanityFilter';
 import { getFirestore, collection, addDoc, updateDoc, doc, serverTimestamp, arrayUnion, query, orderBy, limit, setDoc, deleteDoc, onSnapshot, getDocs } from 'firebase/firestore';
@@ -544,6 +543,12 @@ Blocks: \`\`\`code\`\`\``;
                 >
                   Code
                 </Link>
+                <Link
+                  to="/bhailang"
+                  className="text-gray-300 hover:text-white transition-colors duration-200 font-medium"
+                >
+                  Bhai Lang
+                </Link>
               </div>
             </div>
             <div className="flex items-center space-x-4">
@@ -589,23 +594,35 @@ Blocks: \`\`\`code\`\`\``;
 
       {/* Main content with sidebar */}
       <main className="flex-1 flex h-full pt-16 relative">
-        {/* Left Sidebar - Ad */}
-        <aside className="hidden lg:block w-44 bg-gray-950 border-r border-gray-800 fixed left-0 top-14 z-10" style={{ height: 'calc(100vh - 56px)' }}>
-          <div className="p-2 space-y-2 h-full overflow-hidden flex flex-col">
-            {/* Main Ad - 160x600 */}
+        {/* Responsive Ad Sidebar */}
+        <aside className="hidden md:block w-32 lg:w-44 xl:w-48 bg-gray-950 border-r border-gray-800 fixed left-0 top-14 z-10" style={{ height: 'calc(100vh - 56px)' }}>
+          <div className="p-1 lg:p-2 space-y-1 lg:space-y-2 h-full overflow-hidden flex flex-col">
+            {/* Main Ad - Responsive */}
             <div className="flex-shrink-0">
-              <AdBanner1 className="mx-auto" />
+              <AdBanner1 className="mx-auto" show={true} />
             </div>
 
-            {/* Small Ad Below - 160x300 */}
+            {/* Small Ad Below - Responsive */}
             <div className="flex-shrink-0">
-              <AdBanner2 className="mx-auto" />
+              <AdBanner2 className="mx-auto" show={true} />
             </div>
           </div>
         </aside>
 
-        {/* Chat area */}
-        <div className="flex-1 flex flex-col h-full relative lg:ml-44 pt-14">
+        {/* Mobile Ad Bar (shown on small screens) */}
+        <div className="md:hidden w-full bg-gray-950 border-b border-gray-800 fixed top-14 left-0 z-10 h-16">
+          <div className="flex justify-center items-center h-full px-2 space-x-2">
+            <div className="w-24 h-12 bg-gray-800 rounded flex items-center justify-center text-xs text-gray-500">
+              Ad 1
+            </div>
+            <div className="w-24 h-12 bg-gray-800 rounded flex items-center justify-center text-xs text-gray-500">
+              Ad 2
+            </div>
+          </div>
+        </div>
+
+        {/* Chat area - Responsive margins */}
+        <div className="flex-1 flex flex-col h-full relative md:ml-32 lg:ml-44 xl:ml-48 pt-14 md:pt-14">
         <div
           ref={chatContainerRef}
           className="flex-1 px-4 py-4 flex flex-col space-y-3 overflow-y-auto scrollbar-hide"

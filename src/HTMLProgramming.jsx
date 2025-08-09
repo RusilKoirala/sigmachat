@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import SigmaIcon from './components/SigmaIcon.jsx';
-import AdBanner1 from './components/AdBanner1.jsx';
-import AdBanner2 from './components/AdBanner2.jsx';
+import { AdBanner1, AdBanner2 } from './components/AdManager.jsx';
 
 const HTMLProgramming = () => {
   const [copiedCode, setCopiedCode] = useState('');
@@ -373,21 +372,25 @@ const HTMLProgramming = () => {
         </div>
       </nav>
 
-      {/* Main Content with Sidebar */}
-      <div className="pt-20 flex">
-        {/* Left Sidebar - Ad */}
-        <aside className="hidden lg:block w-44 bg-gray-950 border-r border-gray-800 min-h-screen">
-          <div className="sticky top-20 p-2 space-y-2 max-h-screen overflow-hidden">
-            {/* Main Ad - 160x600 */}
-            <AdBanner1 className="mx-auto" />
+      {/* Responsive Main Content with Sidebar */}
+      <div className="pt-20 flex flex-col lg:flex-row">
+        {/* Responsive Ad Sidebar */}
+        <aside className="w-full lg:w-44 xl:w-48 bg-gray-950 border-b lg:border-b-0 lg:border-r border-gray-800 lg:min-h-screen">
+          <div className="sticky top-20 p-2 lg:space-y-2 max-h-screen overflow-hidden flex flex-row lg:flex-col gap-2 lg:gap-0 justify-center lg:justify-start">
+            {/* Main Ad - Responsive */}
+            <div className="w-1/2 lg:w-full">
+              <AdBanner1 className="mx-auto" show={true} />
+            </div>
 
-            {/* Small Ad Below - 160x300 */}
-            <AdBanner2 className="mx-auto" />
+            {/* Small Ad Below - Responsive */}
+            <div className="w-1/2 lg:w-full">
+              <AdBanner2 className="mx-auto" show={true} />
+            </div>
           </div>
         </aside>
 
-        {/* Content Area */}
-        <div className="flex-1 px-4 max-w-6xl mx-auto">
+        {/* Content Area - Responsive */}
+        <div className="flex-1 px-4 max-w-6xl mx-auto lg:max-w-none">
         {/* Back Button */}
         <Link 
           to="/codes/vip"
