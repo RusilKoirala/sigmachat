@@ -87,59 +87,56 @@ const MainPage = () => {
       </nav>
 
       {/* Hero Section - Responsive */}
-      <section className="relative min-h-screen bg-black text-white flex flex-col items-center justify-center px-4">
+      <section className="relative h-screen bg-black text-white flex flex-col items-center justify-center px-4">
         {/* Main Content */}
-        <div className="text-center flex-1 flex flex-col justify-center max-w-4xl mx-auto">
-          <h1 className="text-4xl sm:text-6xl md:text-8xl lg:text-9xl font-black mb-4 tracking-tighter">
+        <div className="text-center flex flex-col justify-center items-center max-w-4xl mx-auto">
+          <h1 className="text-3xl md:text-5xl lg:text-7xl xl:text-8xl font-black mb-3 md:mb-4 tracking-tighter">
             SIGMA
           </h1>
-          <h2 className="text-lg sm:text-xl md:text-2xl lg:text-3xl font-light mb-8 text-gray-400">
+          <h2 className="text-base md:text-lg lg:text-xl xl:text-2xl font-light mb-6 md:mb-8 text-gray-400">
             A shit chat app for my frds
           </h2>
           <button
             onClick={() => setShowLogin(true)}
-            className="px-6 py-3 border border-white text-white hover:bg-white hover:text-black transition-all duration-200 text-sm sm:text-base"
+            className="px-6 py-3 border-2 border-white text-white hover:bg-white hover:text-black transition-all duration-200 text-sm md:text-base font-medium"
           >
             enter
           </button>
         </div>
 
         {/* Disclaimer - Responsive Code Window Style */}
-        <div className="absolute bottom-4 sm:bottom-8 left-0 right-0 px-2 sm:px-4">
-          <div className="max-w-xs sm:max-w-2xl lg:max-w-3xl mx-auto bg-gray-900 border border-gray-700 rounded-lg shadow-2xl">
+        <div className="absolute bottom-2 left-0 right-0 px-2">
+          <div className="max-w-xs md:max-w-lg lg:max-w-2xl mx-auto bg-gray-900 border border-gray-700 rounded shadow-lg">
             {/* Window Header */}
-            <div className="flex items-center justify-between px-2 sm:px-4 py-2 bg-gray-800 border-b border-gray-700 rounded-t-lg">
-              <div className="flex items-center space-x-1 sm:space-x-2">
-                <div className="w-2 h-2 sm:w-3 sm:h-3 bg-red-500 rounded-full"></div>
-                <div className="w-2 h-2 sm:w-3 sm:h-3 bg-yellow-500 rounded-full"></div>
-                <div className="w-2 h-2 sm:w-3 sm:h-3 bg-green-500 rounded-full"></div>
+            <div className="flex items-center justify-between px-2 py-1 bg-gray-800 border-b border-gray-700 rounded-t">
+              <div className="flex items-center space-x-1">
+                <div className="w-1.5 h-1.5 bg-red-500 rounded-full"></div>
+                <div className="w-1.5 h-1.5 bg-yellow-500 rounded-full"></div>
+                <div className="w-1.5 h-1.5 bg-green-500 rounded-full"></div>
               </div>
-              <div className="text-xs text-gray-400 font-mono hidden sm:block">disclaimer.txt</div>
-              <div className="w-6 sm:w-12"></div>
+              <div className="text-xs text-gray-400 font-mono hidden lg:block">disclaimer.txt</div>
+              <div className="w-4"></div>
             </div>
 
             {/* Content - Responsive */}
-            <div className="p-2 sm:p-4 font-mono text-xs sm:text-sm">
-              <div className="text-gray-500 mb-1 sm:mb-2">
+            <div className="p-1.5 lg:p-3 font-mono text-xs leading-tight">
+              <div className="text-gray-500 mb-0.5">
                 <span className="text-gray-600">01</span> <span className="text-blue-400">/**</span>
               </div>
-              <div className="text-gray-500 mb-1 sm:mb-2">
+              <div className="text-gray-500 mb-0.5">
                 <span className="text-gray-600">02</span> <span className="text-blue-400"> * DISCLAIMER</span>
               </div>
-              <div className="text-gray-500 mb-1 sm:mb-2">
+              <div className="text-gray-500 mb-0.5">
                 <span className="text-gray-600">03</span> <span className="text-blue-400"> */</span>
               </div>
-              <div className="text-gray-300 mb-1 leading-tight sm:leading-normal">
-                <span className="text-gray-600">04</span> <span className="text-yellow-400">Users</span> are responsible for their own <span className="text-green-400">content</span> and <span className="text-green-400">actions</span>.
+              <div className="text-gray-300 mb-0.5 leading-tight">
+                <span className="text-gray-600">04</span> <span className="text-yellow-400">Users</span> responsible for <span className="text-green-400">content</span> and <span className="text-green-400">actions</span>.
               </div>
-              <div className="text-gray-300 mb-1 leading-tight sm:leading-normal">
-                <span className="text-gray-600">05</span> We provide basic <span className="text-purple-400">moderation</span> but don't monitor or take
+              <div className="text-gray-300 mb-0.5 leading-tight">
+                <span className="text-gray-600">05</span> Basic <span className="text-purple-400">moderation</span> provided. Use implies
               </div>
-              <div className="text-gray-300 mb-1 leading-tight sm:leading-normal">
-                <span className="text-gray-600">06</span> responsibility for <span className="text-red-400">user behavior</span>. Continued use implies
-              </div>
-              <div className="text-gray-300 leading-tight sm:leading-normal">
-                <span className="text-gray-600">07</span> <span className="text-blue-400">agreement</span>.
+              <div className="text-gray-300 leading-tight">
+                <span className="text-gray-600">06</span> <span className="text-blue-400">agreement</span>.
               </div>
             </div>
           </div>

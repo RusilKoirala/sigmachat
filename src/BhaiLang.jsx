@@ -350,6 +350,14 @@ bye bhai`,
     setOutput('');
   };
 
+  const handleKeyDown = (e) => {
+    // Run code on Ctrl+Enter or Cmd+Enter
+    if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') {
+      e.preventDefault();
+      runCode();
+    }
+  };
+
   return (
     <div className="min-h-screen bg-black text-white">
       {/* Navigation Bar */}
