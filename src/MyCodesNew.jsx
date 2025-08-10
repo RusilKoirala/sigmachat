@@ -85,7 +85,7 @@ const MyCodes = () => {
         
           </div>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
             {/* Breakout Game */}
             <div className="group bg-slate-900/80 backdrop-blur-sm border border-slate-700 rounded-xl hover:border-slate-600 transition-all duration-300 cursor-pointer shadow-xl hover:shadow-2xl hover:shadow-blue-500/10">
               <div className="p-6 h-full">
