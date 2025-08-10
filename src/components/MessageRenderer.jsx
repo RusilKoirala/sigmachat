@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-const CopyButton = ({ text }) => {
+const CopyButton = ({ text, small = false }) => {
   const [copied, setCopied] = useState(false);
 
   const handleCopy = async () => {
@@ -12,6 +12,26 @@ const CopyButton = ({ text }) => {
       console.error('Failed to copy text: ', err);
     }
   };
+
+  if (small) {
+    return (
+      <button
+        onClick={handleCopy}
+        className="ml-1 p-1 bg-gray-700 hover:bg-gray-600 rounded text-xs text-gray-300 hover:text-white transition-all duration-200 opacity-70 hover:opacity-100"
+        title="Copy code"
+      >
+        {copied ? (
+          <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+          </svg>
+        ) : (
+          <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+          </svg>
+        )}
+      </button>
+    );
+  }
 
   return (
     <button
@@ -41,12 +61,13 @@ const CopyButton = ({ text }) => {
 const MessageRenderer = ({ text }) => {
   const parseMessage = (text) => {
     const parts = [];
-    let currentIndex = 0;
-    
-    // Regex patterns for different markdown elements
+
+    // Regex patterns for different markdown elements and URLs
     const patterns = [
       { type: 'code_block', regex: /```([\s\S]*?)```/g },
       { type: 'inline_code', regex: /`([^`]+)`/g },
+      { type: 'image', regex: /(https?:\/\/[^\s]+\.(?:jpg|jpeg|png|gif|webp|svg)(?:\?[^\s]*)?)/gi },
+      { type: 'url', regex: /(https?:\/\/[^\s]+)/gi },
       { type: 'bold', regex: /\*\*([^*]+)\*\*/g },
       { type: 'italic', regex: /\*([^*]+)\*/g },
     ];
@@ -60,7 +81,7 @@ const MessageRenderer = ({ text }) => {
           type: pattern.type,
           start: match.index,
           end: match.index + match[0].length,
-          content: match[1],
+          content: pattern.type === 'image' || pattern.type === 'url' ? match[0] : match[1],
           fullMatch: match[0]
         });
       }
@@ -139,9 +160,49 @@ const MessageRenderer = ({ text }) => {
         );
       case 'inline_code':
         return (
-          <code key={part.key} className="bg-gray-800 text-green-300 px-2 py-0.5 rounded text-sm font-mono border border-gray-600 font-medium">
+          <span key={part.key} className="inline-flex items-center">
+            <code className="bg-gray-800 text-green-300 px-2 py-0.5 rounded text-sm font-mono border border-gray-600 font-medium">
+              {part.content}
+            </code>
+            <CopyButton text={part.content} small={true} />
+          </span>
+        );
+      case 'image':
+        return (
+          <div key={part.key} className="my-2">
+            <img
+              src={part.content}
+              alt="Shared image"
+              className="max-w-full max-h-96 rounded-lg border border-gray-600 shadow-lg cursor-pointer hover:opacity-90 transition-opacity"
+              onClick={() => window.open(part.content, '_blank')}
+              onError={(e) => {
+                // If image fails to load, show as a regular link
+                e.target.style.display = 'none';
+                e.target.nextSibling.style.display = 'inline';
+              }}
+            />
+            <a
+              href={part.content}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-blue-400 hover:text-blue-300 underline break-all"
+              style={{ display: 'none' }}
+            >
+              {part.content}
+            </a>
+          </div>
+        );
+      case 'url':
+        return (
+          <a
+            key={part.key}
+            href={part.content}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-blue-400 hover:text-blue-300 underline break-all transition-colors"
+          >
             {part.content}
-          </code>
+          </a>
         );
       case 'bold':
         return (

@@ -52,8 +52,11 @@ const ChatPage = () => {
   const [newMessageIndicator, setNewMessageIndicator] = useState(false);
   const navigate = useNavigate();
 
-  // Admin password (in a real app, this would be server-side)
-  const ADMIN_PASSWORD = 'sigma123';
+  // Admin password (obfuscated)
+  const getAdminPassword = () => {
+    const encoded = 'c2lnbWExMjM='; // Base64 encoded
+    return atob(encoded);
+  };
 
   // Check admin session on mount
   useEffect(() => {
@@ -201,6 +204,8 @@ const ChatPage = () => {
     setNewMessage(e.target.value);
   };
 
+
+
   const handleOnSubmit = async e => {
     e.preventDefault();
     const trimmedMessage = newMessage.trim();
@@ -281,7 +286,7 @@ const ChatPage = () => {
     // Handle admin login
     if (trimmedMessage.startsWith('/login ')) {
       const password = trimmedMessage.slice(7).trim();
-      if (password === ADMIN_PASSWORD) {
+      if (password === getAdminPassword()) {
         const sessionId = Date.now().toString();
         setIsAdmin(true);
         setAdminSessionId(sessionId);
@@ -697,6 +702,7 @@ Blocks: \`\`\`code\`\`\``;
             )}
           </button>
         )}
+
         {/* Message input */}
         <form
           onSubmit={handleOnSubmit}
