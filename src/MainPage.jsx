@@ -51,43 +51,24 @@ const MainPage = () => {
   };
 
   return (
-    <div className="relative">
+    <div className="min-h-screen bg-slate-950 text-slate-100">
       {/* Navigation Bar */}
-      <nav className="fixed top-0 left-0 right-0 z-50 bg-black bg-opacity-80 backdrop-blur-sm border-b border-gray-800">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-16">
-            <div className="flex items-center">
-              <Link to="/" className="text-white text-xl font-bold tracking-wider flex items-center space-x-2">
-                <SigmaIcon className="w-6 h-6" />
-                <span>SIGMA</span>
-              </Link>
-            </div>
-            <div className="flex space-x-8">
-              <Link
-                to="/chat"
-                className="text-gray-300 hover:text-white transition-colors duration-200 font-medium"
-              >
-                Chat
-              </Link>
-              <Link
-                to="/codes"
-                className="text-gray-300 hover:text-white transition-colors duration-200 font-medium"
-              >
-                Code
-              </Link>
-              <Link
-                to="/bhailang"
-                className="text-gray-300 hover:text-white transition-colors duration-200 font-medium"
-              >
-                Bhai Lang
-              </Link>
-            </div>
+      <nav className="bg-slate-900/95 backdrop-blur-sm border-b border-slate-800 fixed top-0 left-0 right-0 z-20">
+        <div className="px-6 py-4 flex items-center justify-between max-w-7xl mx-auto">
+          <Link to="/" className="flex items-center space-x-3 hover:text-blue-400 transition-colors group">
+            <SigmaIcon className="w-8 h-8 text-blue-500 group-hover:text-blue-400 transition-colors" />
+            <span className="font-bold text-xl tracking-tight">SIGMA</span>
+          </Link>
+          <div className="flex items-center space-x-8">
+            <Link to="/chat" className="text-slate-300 hover:text-white transition-colors font-medium">Chat</Link>
+            <Link to="/codes" className="text-slate-300 hover:text-white transition-colors font-medium">Codes</Link>
+            <Link to="/bhailang" className="text-slate-300 hover:text-white transition-colors font-medium">Bhai Lang</Link>
           </div>
         </div>
       </nav>
 
       {/* Hero Section - Responsive */}
-      <section className="relative h-screen bg-black text-white flex flex-col items-center justify-center px-4">
+      <section className="relative h-screen bg-slate-950 text-slate-100 flex flex-col items-center justify-center px-6">
         {/* Main Content */}
         <div className="text-center flex flex-col justify-center items-center max-w-4xl mx-auto">
           <h1 className="text-3xl md:text-5xl lg:text-7xl xl:text-8xl font-black mb-3 md:mb-4 tracking-tighter">
@@ -98,9 +79,9 @@ const MainPage = () => {
           </h2>
           <button
             onClick={() => setShowLogin(true)}
-            className="px-6 py-3 border-2 border-white text-white hover:bg-white hover:text-black transition-all duration-200 text-sm md:text-base font-medium"
+            className="px-8 py-4 bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white rounded-xl font-bold text-lg transition-all duration-200 transform hover:scale-105 shadow-lg hover:shadow-blue-500/25"
           >
-            enter
+            Enter Chat
           </button>
         </div>
 

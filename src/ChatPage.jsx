@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useRef, useState, useMemo } from 'react';
+import { useContext, useEffect, useRef, useState, useMemo } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { UsernameContext } from './usernameContext.jsx';
 import { useFirestoreQuery, getAvatarUrl, useRequireUsername } from './hooks.js';
@@ -8,7 +8,7 @@ import SigmaIcon from './components/SigmaIcon.jsx';
 import { AdBanner1, AdBanner2 } from './components/AdManager.jsx';
 
 import { containsProfanity, getBadWordWarning } from './utils/profanityFilter';
-import { getFirestore, collection, addDoc, updateDoc, doc, serverTimestamp, arrayUnion, query, orderBy, limit, setDoc, deleteDoc, onSnapshot, getDocs } from 'firebase/firestore';
+import { getFirestore, collection, addDoc, doc, serverTimestamp, query, orderBy, limit, setDoc, deleteDoc, onSnapshot, getDocs } from 'firebase/firestore';
 import { initializeApp } from 'firebase/app';
 
 const firebaseConfig = {
@@ -43,12 +43,10 @@ const ChatPage = () => {
   const [showScrollButton, setShowScrollButton] = useState(false);
   const [isAtBottom, setIsAtBottom] = useState(true);
   const [isAdmin, setIsAdmin] = useState(false);
-  const [adminSessionId, setAdminSessionId] = useState(null);
   const [lastMessageTime, setLastMessageTime] = useState(0);
   const [messageCount, setMessageCount] = useState(0);
   const [spamPenalty, setSpamPenalty] = useState(0); // Penalty end time
   const [spamStrikes, setSpamStrikes] = useState(0); // Number of spam violations
-  const [penaltyCountdown, setPenaltyCountdown] = useState(0); // Real-time countdown
   const [newMessageIndicator, setNewMessageIndicator] = useState(false);
   const navigate = useNavigate();
 
@@ -80,7 +78,6 @@ const ChatPage = () => {
   // Clear admin session on logout
   const clearAdminSession = () => {
     setIsAdmin(false);
-    setAdminSessionId(null);
     localStorage.removeItem(`sigmachat-admin-${username}`);
     localStorage.removeItem(`sigmachat-admin-time-${username}`);
   };
@@ -525,50 +522,31 @@ Blocks: \`\`\`code\`\`\``;
   };
 
   return (
-    <div className="flex flex-col h-screen bg-black text-white">
+    <div className="flex flex-col h-screen bg-slate-950 text-slate-100">
       {/* Navigation Bar */}
-      <nav className="fixed top-0 left-0 right-0 z-50 bg-black bg-opacity-90 backdrop-blur-sm border-b border-gray-800">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 lg:ml-44">
-          <div className="flex justify-between items-center h-14">
-            <div className="flex items-center space-x-6">
-              <Link to="/" className="text-white text-xl font-bold tracking-wider flex items-center space-x-2">
-                <SigmaIcon className="w-6 h-6" />
-                <span>SIGMA</span>
-              </Link>
-              <div className="flex space-x-6">
-                <Link
-                  to="/chat"
-                  className="text-white font-medium border-b-2 border-white"
-                >
-                  Chat
-                </Link>
-                <Link
-                  to="/codes"
-                  className="text-gray-300 hover:text-white transition-colors duration-200 font-medium"
-                >
-                  Code
-                </Link>
-                <Link
-                  to="/bhailang"
-                  className="text-gray-300 hover:text-white transition-colors duration-200 font-medium"
-                >
-                  Bhai Lang
-                </Link>
-              </div>
-            </div>
-            <div className="flex items-center space-x-4">
-              <span className="text-xs text-gray-400 font-bold hidden sm:block">
-                Made By OG Rusil
+      <nav className="fixed top-0 left-0 right-0 z-50 bg-slate-900/95 backdrop-blur-sm border-b border-slate-800">
+        <div className="px-4 sm:px-6 py-3 sm:py-4 flex items-center justify-between max-w-7xl mx-auto">
+          <Link to="/" className="flex items-center space-x-2 sm:space-x-3 hover:text-blue-400 transition-colors group">
+            <SigmaIcon className="w-6 h-6 sm:w-8 sm:h-8 text-blue-500 group-hover:text-blue-400 transition-colors" />
+            <span className="font-bold text-lg sm:text-xl tracking-tight">SIGMA</span>
+          </Link>
+          <div className="flex items-center space-x-3 sm:space-x-8">
+            <Link to="/chat" className="text-blue-400 font-semibold border-b-2 border-blue-400 pb-1 text-sm sm:text-base">Chat</Link>
+            <Link to="/codes" className="text-slate-300 hover:text-white transition-colors font-medium text-sm sm:text-base hidden sm:inline">Codes</Link>
+            <Link to="/bhailang" className="text-slate-300 hover:text-white transition-colors font-medium text-sm sm:text-base hidden sm:inline">Bhai Lang</Link>
+            <div className="flex items-center space-x-2 sm:space-x-4">
+              <span className="text-xs text-slate-400 font-bold hidden md:block">
+                {username}
               </span>
               <button
-                onClick={() => setShowUsers(v => !v)}
-                className="px-4 py-2 border border-gray-600 text-white hover:bg-gray-800 transition-colors font-medium text-sm"
+                onClick={() => setShowUsers(!showUsers)}
+                className="text-slate-300 hover:text-white transition-colors text-xs sm:text-sm font-medium"
               >
                 Users ({activeUsers.length})
               </button>
               <button
                 onClick={handleLogout}
-                className="px-4 py-2 bg-white text-black hover:bg-gray-200 transition-colors font-medium text-sm"
+                className="px-2 sm:px-4 py-1 sm:py-2 bg-white text-black hover:bg-gray-200 transition-colors font-medium text-xs sm:text-sm rounded-lg"
               >
                 Logout
               </button>
@@ -578,38 +556,49 @@ Blocks: \`\`\`code\`\`\``;
       </nav>
       {/* Active users modal/dropdown */}
       {showUsers && (
-        <div className="fixed top-16 right-4 bg-gray-900 border border-gray-700 rounded-lg shadow-2xl p-6 z-60 w-72 max-h-80 overflow-y-auto">
-          <div className="font-bold mb-4 text-white text-lg">Active Users</div>
-          <ul className="space-y-3">
-            {activeUsers.map(u => (
-              <li key={u.username} className="flex items-center">
-                <img src={u.avatarUrl} alt={u.username} className="w-8 h-8 rounded-full mr-3" />
-                <span className="text-white">{u.username}</span>
-              </li>
-            ))}
-          </ul>
-          <button
-            onClick={() => setShowUsers(false)}
-            className="mt-4 w-full px-4 py-2 border border-gray-600 text-white hover:bg-gray-800 transition-colors font-medium"
-          >
-            Close
-          </button>
-        </div>
+        <>
+          <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50" onClick={() => setShowUsers(false)}></div>
+          <div className="fixed top-20 right-6 bg-slate-900/95 backdrop-blur-sm border border-slate-700 rounded-xl shadow-2xl p-6 z-60 w-80 max-h-96 overflow-y-auto">
+            <div className="flex items-center justify-between mb-6">
+              <h3 className="font-bold text-white text-lg">Active Users ({activeUsers.length})</h3>
+              <button
+                onClick={() => setShowUsers(false)}
+                className="text-slate-400 hover:text-white transition-colors p-1 hover:bg-slate-800 rounded-lg"
+              >
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              </button>
+            </div>
+            <ul className="space-y-3">
+              {activeUsers.map(u => (
+                <li key={u.username} className="flex items-center p-3 rounded-lg hover:bg-slate-800/50 transition-colors">
+                  <img src={u.avatarUrl} alt={u.username} className="w-10 h-10 rounded-full mr-3 border-2 border-slate-600" />
+                  <div className="flex-1">
+                    <span className="text-white font-medium">{u.username}</span>
+                    <div className="text-xs text-slate-400">Online</div>
+                  </div>
+                  <div className="w-2 h-2 bg-green-500 rounded-full"></div>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </>
       )}
 
       {/* Main content with sidebar */}
       <main className="flex-1 flex h-full pt-16 relative">
         {/* Responsive Ad Sidebar */}
-        <aside className="hidden md:block w-32 lg:w-44 xl:w-48 bg-gray-950 border-r border-gray-800 fixed left-0 top-14 z-10" style={{ height: 'calc(100vh - 56px)' }}>
-          <div className="p-1 lg:p-2 space-y-1 lg:space-y-2 h-full overflow-hidden flex flex-col">
+        <aside className="hidden lg:block w-44 xl:w-48 bg-slate-900/50 border-r border-slate-800 fixed left-0 top-14 sm:top-16 z-10" style={{ height: 'calc(100vh - 56px)' }}>
+          <div className="p-2 xl:p-3 space-y-2 xl:space-y-3 h-full overflow-hidden flex flex-col">
             {/* Main Ad - Responsive */}
             <div className="flex-shrink-0">
-              <AdBanner1 className="mx-auto" show={true} />
+              <AdBanner1 className="mx-auto rounded-lg overflow-hidden" show={true} />
             </div>
 
             {/* Small Ad Below - Responsive */}
             <div className="flex-shrink-0">
-              <AdBanner2 className="mx-auto" show={true} />
+              <AdBanner2 className="mx-auto rounded-lg overflow-hidden" show={true} />
             </div>
           </div>
         </aside>
@@ -627,10 +616,10 @@ Blocks: \`\`\`code\`\`\``;
         </div>
 
         {/* Chat area - Responsive margins */}
-        <div className="flex-1 flex flex-col h-full relative md:ml-32 lg:ml-44 xl:ml-48 pt-14 md:pt-14">
+        <div className="flex-1 flex flex-col h-full relative lg:ml-44 xl:ml-48 pt-14 sm:pt-16">
         <div
           ref={chatContainerRef}
-          className="flex-1 px-4 py-4 flex flex-col space-y-3 overflow-y-auto scrollbar-hide"
+          className="flex-1 px-4 sm:px-6 py-4 sm:py-6 flex flex-col space-y-3 sm:space-y-4 overflow-y-auto scrollbar-hide"
           style={{
             minHeight: 0,
             scrollbarWidth: 'none',
@@ -706,7 +695,7 @@ Blocks: \`\`\`code\`\`\``;
         {/* Message input */}
         <form
           onSubmit={handleOnSubmit}
-          className="flex items-center gap-3 p-4 border-t border-gray-800 bg-black"
+          className="flex items-center gap-3 sm:gap-4 p-4 sm:p-6 border-t border-slate-800 bg-slate-900/80 backdrop-blur-sm"
         >
           <div className="flex-1 relative">
             {isAdmin && (
@@ -718,10 +707,10 @@ Blocks: \`\`\`code\`\`\``;
               ref={inputRef}
               type="text"
               className={classNames(
-                "w-full bg-gray-900 text-white rounded-lg px-4 py-3 focus:outline-none focus:ring-1 border transition-all",
+                "w-full bg-gray-900 text-slate-100 rounded-xl px-4 sm:px-5 py-3 sm:py-3.5 focus:outline-none focus:ring-2 border transition-all duration-200 placeholder-gray-500 text-sm sm:text-base",
                 isAdmin
-                  ? "focus:ring-red-500 border-red-600"
-                  : "focus:ring-gray-500 border-gray-700"
+                  ? "focus:ring-red-500 border-red-600/50 focus:border-red-500"
+                  : "focus:ring-blue-500 border-gray-900 focus:border-blue-500"
               )}
               placeholder={isAdmin ? "Type message or /command..." : "Type your message..."}
               value={newMessage}
@@ -734,12 +723,12 @@ Blocks: \`\`\`code\`\`\``;
           <button
             type="submit"
             className={classNames(
-              "flex items-center justify-center py-3 px-4 rounded-lg font-medium transition-all disabled:opacity-50 border",
+              "flex items-center justify-center py-3 sm:py-3.5 px-4 sm:px-6 rounded-xl font-medium transition-all duration-200 disabled:opacity-50 border shadow-lg text-sm sm:text-base",
               loading || !newMessage.trim()
-                ? "bg-gray-800 text-gray-400 border-gray-700 cursor-not-allowed"
+                ? "bg-slate-700 text-slate-400 border-slate-600 cursor-not-allowed"
                 : isAdmin
-                ? "bg-red-600 hover:bg-red-700 text-white border-red-600 hover:border-red-700"
-                : "bg-blue-600 hover:bg-blue-700 text-white border-blue-600 hover:border-blue-700"
+                ? "bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 text-white border-red-600 hover:border-red-700 hover:shadow-red-500/25"
+                : "bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white border-blue-600 hover:border-blue-700 hover:shadow-blue-500/25"
             )}
             disabled={loading || !newMessage.trim()}
           >

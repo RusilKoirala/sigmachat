@@ -359,18 +359,18 @@ bye bhai`,
   };
 
   return (
-    <div className="min-h-screen bg-black text-white">
+    <div className="min-h-screen bg-slate-950 text-slate-100">
       {/* Navigation Bar */}
-      <nav className="bg-black border-b border-gray-800 fixed top-0 left-0 right-0 z-20">
-        <div className="px-4 py-3 flex items-center justify-between">
-          <Link to="/" className="flex items-center space-x-2 hover:text-gray-300 transition-colors">
-            <SigmaIcon className="w-8 h-8" />
-            <span className="font-bold text-xl">SIGMA</span>
+      <nav className="bg-slate-900/95 backdrop-blur-sm border-b border-slate-800 fixed top-0 left-0 right-0 z-20">
+        <div className="px-6 py-4 flex items-center justify-between max-w-7xl mx-auto">
+          <Link to="/" className="flex items-center space-x-3 hover:text-blue-400 transition-colors group">
+            <SigmaIcon className="w-8 h-8 text-blue-500 group-hover:text-blue-400 transition-colors" />
+            <span className="font-bold text-xl tracking-tight">SIGMA</span>
           </Link>
-          <div className="flex items-center space-x-6">
-            <Link to="/chat" className="hover:text-gray-300 transition-colors">Chat</Link>
-            <Link to="/codes" className="hover:text-gray-300 transition-colors">Codes</Link>
-            <Link to="/bhailang" className="text-orange-400 font-medium">Bhai Lang</Link>
+          <div className="flex items-center space-x-8">
+            <Link to="/chat" className="text-slate-300 hover:text-white transition-colors font-medium">Chat</Link>
+            <Link to="/codes" className="text-slate-300 hover:text-white transition-colors font-medium">Codes</Link>
+            <Link to="/bhailang" className="text-orange-400 font-semibold border-b-2 border-blue-400 pb-1">Bhai Lang</Link>
           </div>
         </div>
       </nav>
@@ -378,29 +378,34 @@ bye bhai`,
       {/* Responsive Main Content with Sidebar */}
       <div className="pt-20 flex flex-col lg:flex-row">
         {/* Responsive Ad Sidebar */}
-        <aside className="w-full lg:w-44 xl:w-48 bg-gray-950 border-b lg:border-b-0 lg:border-r border-gray-800 lg:min-h-screen">
-          <div className="sticky top-20 p-2 lg:space-y-2 max-h-screen overflow-hidden flex flex-row lg:flex-col gap-2 lg:gap-0 justify-center lg:justify-start">
+        <aside className="w-full lg:w-48 xl:w-52 bg-slate-900/50 border-b lg:border-b-0 lg:border-r border-slate-800 lg:min-h-screen">
+          <div className="sticky top-20 p-3 lg:space-y-3 max-h-screen overflow-hidden flex flex-row lg:flex-col gap-3 lg:gap-0 justify-center lg:justify-start">
             {/* Main Ad - Responsive */}
             <div className="w-1/2 lg:w-full">
-              <AdBanner1 className="mx-auto" show={true} />
+              <AdBanner1 className="mx-auto rounded-lg overflow-hidden" show={true} />
             </div>
 
             {/* Small Ad Below - Responsive */}
             <div className="w-1/2 lg:w-full">
-              <AdBanner2 className="mx-auto" show={true} />
+              <AdBanner2 className="mx-auto rounded-lg overflow-hidden" show={true} />
             </div>
           </div>
         </aside>
 
         {/* Content Area - Responsive */}
-        <div className="flex-1 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto lg:max-w-none lg:ml-0">
+        <div className="flex-1 px-6 sm:px-8 lg:px-10 max-w-7xl mx-auto lg:max-w-none lg:ml-0">
           {/* Header */}
-          <div className="text-center mb-8 pt-8">
-            <h1 className="text-4xl font-bold mb-4 bg-gradient-to-r from-orange-400 to-red-500 bg-clip-text text-transparent">
-              Bhai Lang Playground
-            </h1>
-            <p className="text-lg text-gray-400 mb-4">
-              Write and run Bhai Lang code in your browser!
+          <div className="text-center mb-10 pt-10">
+            <div className="inline-flex items-center space-x-3 mb-4">
+              <div className="w-12 h-12 bg-gradient-to-br from-orange-500 to-red-500 rounded-xl flex items-center justify-center">
+                <span className="text-white font-bold text-xl">भ</span>
+              </div>
+              <h1 className="text-4xl font-bold text-white">
+                Bhai Lang Playground
+              </h1>
+            </div>
+            <p className="text-lg text-slate-400 mb-8 max-w-2xl mx-auto leading-relaxed">
+              Write and run Bhai Lang code in your browser! Code in your own language using Hindi/Hinglish syntax.
             </p>
           </div>
 
@@ -408,17 +413,17 @@ bye bhai`,
           <section className="mb-8 lg:mb-12">
             <div className="w-full">
               {/* Example Selector */}
-              <div className="mb-4 lg:mb-6">
-                <h3 className="text-base lg:text-lg font-semibold mb-3 text-center">Load Example:</h3>
-                <div className="flex flex-wrap justify-center gap-1 lg:gap-2 px-2">
+              <div className="mb-8 lg:mb-10">
+                <h3 className="text-lg lg:text-xl font-semibold mb-6 text-center text-white">Load Example:</h3>
+                <div className="flex flex-wrap justify-center gap-3 lg:gap-4 px-4">
                   {Object.entries(examples).map(([key, example]) => (
                     <button
                       key={key}
                       onClick={() => loadExample(key)}
-                      className={`px-2 lg:px-3 py-1 rounded-lg font-medium transition-colors text-xs lg:text-sm ${
+                      className={`px-4 lg:px-6 py-2.5 lg:py-3 rounded-xl font-medium transition-all duration-200 text-sm lg:text-base ${
                         selectedExample === key
-                          ? 'bg-orange-600 text-white'
-                          : 'bg-gray-800 text-gray-300 hover:bg-gray-700'
+                          ? 'bg-gradient-to-r from-orange-500 to-red-500 text-white shadow-lg shadow-orange-500/25'
+                          : 'bg-slate-800 text-slate-300 hover:bg-slate-700 hover:text-white border border-slate-700 hover:border-slate-600'
                       }`}
                     >
                       {example.title}
@@ -430,19 +435,26 @@ bye bhai`,
               {/* Code Editor and Output */}
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 lg:gap-6">
                 {/* Code Editor */}
-                <div className="bg-gray-900 border border-gray-700 rounded-lg overflow-hidden">
-                  <div className="bg-gray-800 px-3 lg:px-4 py-2 lg:py-3 border-b border-gray-700 flex items-center justify-between">
-                    <h3 className="font-semibold text-orange-400 text-sm lg:text-base">Code Editor</h3>
-                    <div className="flex gap-1 lg:gap-2">
+                <div className="bg-slate-900/80 backdrop-blur-sm border border-slate-700 rounded-xl overflow-hidden shadow-2xl">
+                  <div className="bg-slate-800/90 px-4 lg:px-6 py-3 lg:py-4 border-b border-slate-700 flex items-center justify-between">
+                    <div className="flex items-center space-x-3">
+                      <div className="flex space-x-2">
+                        <div className="w-3 h-3 bg-red-500 rounded-full"></div>
+                        <div className="w-3 h-3 bg-yellow-500 rounded-full"></div>
+                        <div className="w-3 h-3 bg-green-500 rounded-full"></div>
+                      </div>
+                      <h3 className="font-semibold text-orange-400 text-sm lg:text-base">Code Editor</h3>
+                    </div>
+                    <div className="flex gap-2 lg:gap-3">
                       <button
                         onClick={() => copyToClipboard(code)}
-                        className="bg-blue-600 hover:bg-blue-700 text-white px-2 lg:px-3 py-1 rounded text-xs lg:text-sm transition-colors"
+                        className="bg-blue-600 hover:bg-blue-700 text-white px-3 lg:px-4 py-1.5 lg:py-2 rounded-lg text-xs lg:text-sm transition-all duration-200 font-medium shadow-lg hover:shadow-blue-500/25"
                       >
                         Copy
                       </button>
                       <button
                         onClick={() => setCode('')}
-                        className="bg-gray-600 hover:bg-gray-700 text-white px-2 lg:px-3 py-1 rounded text-xs lg:text-sm transition-colors"
+                        className="bg-slate-600 hover:bg-slate-700 text-white px-3 lg:px-4 py-1.5 lg:py-2 rounded-lg text-xs lg:text-sm transition-all duration-200 font-medium"
                       >
                         Clear
                       </button>

@@ -17,25 +17,25 @@ const MyCodes = () => {
     document.body.removeChild(link);
   };
   return (
-    <div className="min-h-screen bg-black text-white">
+    <div className="min-h-screen bg-slate-950 text-slate-100">
       {/* Navigation Bar */}
-      <nav className="fixed top-0 left-0 right-0 z-50 bg-black bg-opacity-80 backdrop-blur-sm border-b border-gray-800">
+      <nav className="fixed top-0 left-0 right-0 z-50 bg-slate-900/95 backdrop-blur-sm border-b border-slate-800">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-16">
+          <div className="flex justify-between items-center h-14 sm:h-16">
             <div className="flex items-center">
-              <Link to="/" className="text-white text-xl font-bold tracking-wider flex items-center space-x-2">
-                <SigmaIcon className="w-6 h-6" />
+              <Link to="/" className="text-white text-lg sm:text-xl font-bold tracking-tight flex items-center space-x-2 sm:space-x-3 hover:text-blue-400 transition-colors group">
+                <SigmaIcon className="w-6 h-6 sm:w-8 sm:h-8 text-blue-500 group-hover:text-blue-400 transition-colors" />
                 <span>SIGMA</span>
               </Link>
             </div>
-            <div className="flex space-x-8">
-              <Link to="/chat" className="text-gray-300 hover:text-white transition-colors duration-200 font-medium">
+            <div className="flex space-x-4 sm:space-x-8">
+              <Link to="/chat" className="text-slate-300 hover:text-white transition-colors duration-200 font-medium text-sm sm:text-base">
                 Chat
               </Link>
-              <Link to="/codes" className="text-white font-medium border-b-2 border-white">
-                Code
+              <Link to="/codes" className="text-blue-400 font-semibold border-b-2 border-blue-400 pb-1 text-sm sm:text-base">
+                Codes
               </Link>
-              <Link to="/bhailang" className="text-gray-300 hover:text-white transition-colors duration-200 font-medium">
+              <Link to="/bhailang" className="text-slate-300 hover:text-white transition-colors duration-200 font-medium text-sm sm:text-base hidden sm:inline">
                 Bhai Lang
               </Link>
             </div>
@@ -44,89 +44,177 @@ const MyCodes = () => {
       </nav>
 
       {/* Responsive Main Content with Sidebar */}
-      <div className="pt-20 flex flex-col lg:flex-row">
+      <div className="pt-16 sm:pt-20 flex flex-col lg:flex-row">
         {/* Responsive Ad Sidebar */}
-        <aside className="w-full lg:w-44 xl:w-48 bg-gray-950 border-b lg:border-b-0 lg:border-r border-gray-800 lg:min-h-screen">
-          <div className="sticky top-20 p-2 lg:space-y-2 max-h-screen overflow-hidden flex flex-row lg:flex-col gap-2 lg:gap-0 justify-center lg:justify-start">
+        <aside className="w-full lg:w-48 xl:w-52 bg-slate-900/50 border-b lg:border-b-0 lg:border-r border-slate-800 lg:min-h-screen">
+          <div className="sticky top-16 sm:top-20 p-2 sm:p-3 lg:space-y-3 max-h-screen overflow-hidden flex flex-row lg:flex-col gap-2 sm:gap-3 lg:gap-0 justify-center lg:justify-start">
             {/* Main Ad - Responsive */}
             <div className="w-1/2 lg:w-full">
-              <AdBanner1 className="mx-auto" show={true} />
+              <AdBanner1 className="mx-auto rounded-lg overflow-hidden" show={true} />
             </div>
 
             {/* Small Ad Below - Responsive */}
             <div className="w-1/2 lg:w-full">
-              <AdBanner2 className="mx-auto" show={true} />
+              <AdBanner2 className="mx-auto rounded-lg overflow-hidden" show={true} />
             </div>
           </div>
         </aside>
 
         {/* Content Area - Responsive */}
-        <div className="flex-1 px-4 max-w-6xl mx-auto lg:max-w-none">
-        <div className="text-center mb-12">
-          <h1 className="text-5xl font-bold mb-4 tracking-wider">CODE VAULT</h1>
-          <p className="text-xl text-gray-400 font-light">Download cool stuff and access secret codes</p>
+        <div className="flex-1 px-4 sm:px-6 lg:px-10 max-w-6xl mx-auto lg:max-w-none">
+        <div className="text-center mb-16 pt-8">
+          <div className="inline-flex items-center space-x-3 mb-6">
+            <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-purple-500 rounded-xl flex items-center justify-center">
+              <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+              </svg>
+            </div>
+            <h1 className="text-4xl font-bold text-white">
+              Downloads
+            </h1>
+          </div>
+          <p className="text-lg text-slate-400 max-w-2xl mx-auto leading-relaxed">
+            High-quality Python games and tools ready for download and use
+          </p>
         </div>
 
-        {/* Category 1: Cool Things to Download */}
-        <section className="mb-16">
-          <h2 className="text-3xl font-bold mb-8 text-center"> Cool Things to Download</h2>
-          
-          <div className="grid md:grid-cols-3 lg:grid-cols-4 gap-6">
-            {/* Pygame Ball Game */}
-            <Link to="/codes/bouncing-ball" className="group block">
-              <div className="bg-gradient-to-br from-red-600 via-purple-600 to-blue-600 rounded-xl p-1 hover:scale-105 transition-all duration-300 cursor-pointer">
-                <div className="bg-black rounded-lg p-6 h-full">
-                  <div className="text-center">
-                    <div className="text-4xl mb-4">🎮</div>
-                    <h3 className="text-lg font-bold text-white mb-2">Bouncing Ball</h3>
-                    <p className="text-gray-400 text-sm mb-4">Simple pygame game with bouncing physics</p>
-                    <div className="bg-gray-800 rounded px-3 py-1 text-xs text-green-400">Python + Pygame</div>
-                  </div>
-                </div>
-              </div>
-            </Link>
+        {/* Games Section */}
+        <section className="mb-20">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl font-bold text-white mb-4">Interactive Games</h2>
+        
+          </div>
 
-            {/* Coming Soon Cards */}
-            <div className="bg-gradient-to-br from-gray-600 to-gray-800 rounded-xl p-1">
-              <div className="bg-black rounded-lg p-6 h-full">
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {/* Breakout Game */}
+            <div className="group bg-slate-900/80 backdrop-blur-sm border border-slate-700 rounded-xl hover:border-slate-600 transition-all duration-300 cursor-pointer shadow-xl hover:shadow-2xl hover:shadow-blue-500/10">
+              <div className="p-6 h-full">
                 <div className="text-center">
-                  <div className="text-4xl mb-4">🚧</div>
-                  <h3 className="text-lg font-bold text-white mb-2">Snake Game</h3>
-                  <p className="text-gray-400 text-sm mb-4">Classic snake game coming soon</p>
-                  <div className="bg-gray-800 rounded px-3 py-1 text-xs text-gray-500">Coming Soon</div>
+                  <div className="text-4xl mb-4 group-hover:scale-110 transition-transform duration-300">🧱</div>
+                  <h3 className="text-lg font-semibold text-white mb-2">Breakout</h3>
+                  <p className="text-slate-400 text-sm mb-4 leading-relaxed">Classic brick-breaking arcade game with modern graphics</p>
+                  <div className="bg-slate-800 rounded-lg px-3 py-1.5 text-xs text-slate-300 mb-6 inline-block">Python + Pygame</div>
+                  <button
+                    onClick={() => handleDownload('breakout_game.py')}
+                    className="w-full bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white py-2.5 px-4 rounded-lg transition-all duration-200 text-sm font-medium shadow-lg hover:shadow-blue-500/25"
+                  >
+                    Download Game
+                  </button>
                 </div>
               </div>
             </div>
 
-            <div className="bg-gradient-to-br from-gray-600 to-gray-800 rounded-xl p-1">
-              <div className="bg-black rounded-lg p-6 h-full">
+            {/* Snake Game */}
+            <div className="group bg-slate-900/80 backdrop-blur-sm border border-slate-700 rounded-xl hover:border-slate-600 transition-all duration-300 cursor-pointer shadow-xl hover:shadow-2xl hover:shadow-blue-500/10">
+              <div className="p-6 h-full">
                 <div className="text-center">
-                  <div className="text-4xl mb-4">🎯</div>
-                  <h3 className="text-lg font-bold text-white mb-2">Target Game</h3>
-                  <p className="text-gray-400 text-sm mb-4">Aim and shoot targets</p>
-                  <div className="bg-gray-800 rounded px-3 py-1 text-xs text-gray-500">Coming Soon</div>
+                  <div className="text-4xl mb-4 group-hover:scale-110 transition-transform duration-300">🐍</div>
+                  <h3 className="text-lg font-semibold text-white mb-2">Snake</h3>
+                  <p className="text-slate-400 text-sm mb-4 leading-relaxed">Classic snake game with modern graphics and smooth gameplay</p>
+                  <div className="bg-slate-800 rounded-lg px-3 py-1.5 text-xs text-slate-300 mb-6 inline-block">Python + Pygame</div>
+                  <button
+                    onClick={() => handleDownload('snake_game.py')}
+                    className="w-full bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white py-2.5 px-4 rounded-lg transition-all duration-200 text-sm font-medium shadow-lg hover:shadow-blue-500/25"
+                  >
+                    Download Game
+                  </button>
                 </div>
               </div>
             </div>
 
-            <div className="bg-gradient-to-br from-gray-600 to-gray-800 rounded-xl p-1">
-              <div className="bg-black rounded-lg p-6 h-full">
+            {/* Target Shooter Game */}
+            <div className="group bg-slate-900/80 backdrop-blur-sm border border-slate-700 rounded-xl hover:border-slate-600 transition-all duration-300 cursor-pointer shadow-xl hover:shadow-2xl hover:shadow-blue-500/10">
+              <div className="p-6 h-full">
                 <div className="text-center">
-                  <div className="text-4xl mb-4">🏎️</div>
-                  <h3 className="text-lg font-bold text-white mb-2">Car Race</h3>
-                  <p className="text-gray-400 text-sm mb-4">Simple racing game</p>
-                  <div className="bg-gray-800 rounded px-3 py-1 text-xs text-gray-500">Coming Soon</div>
+                  <div className="text-4xl mb-4 group-hover:scale-110 transition-transform duration-300">🎯</div>
+                  <h3 className="text-lg font-semibold text-white mb-2">Target Shooter</h3>
+                  <p className="text-slate-400 text-sm mb-4 leading-relaxed">Aim and shoot moving targets with precision and skill</p>
+                  <div className="bg-slate-800 rounded-lg px-3 py-1.5 text-xs text-slate-300 mb-6 inline-block">Python + Pygame</div>
+                  <button
+                    onClick={() => handleDownload('target_shooter.py')}
+                    className="w-full bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white py-2.5 px-4 rounded-lg transition-all duration-200 text-sm font-medium shadow-lg hover:shadow-blue-500/25"
+                  >
+                    Download Game
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            {/* Car Racing Game */}
+            <div className="group bg-slate-900/80 backdrop-blur-sm border border-slate-700 rounded-xl hover:border-slate-600 transition-all duration-300 cursor-pointer shadow-xl hover:shadow-2xl hover:shadow-blue-500/10">
+              <div className="p-6 h-full">
+                <div className="text-center">
+                  <div className="text-4xl mb-4 group-hover:scale-110 transition-transform duration-300">🏎️</div>
+                  <h3 className="text-lg font-semibold text-white mb-2">Car Race</h3>
+                  <p className="text-slate-400 text-sm mb-4 leading-relaxed">Fast-paced racing action with realistic physics</p>
+                  <div className="bg-slate-800 rounded-lg px-3 py-1.5 text-xs text-slate-300 mb-6 inline-block">Python + Pygame</div>
+                  <button
+                    onClick={() => handleDownload('car_race.py')}
+                    className="w-full bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white py-2.5 px-4 rounded-lg transition-all duration-200 text-sm font-medium shadow-lg hover:shadow-blue-500/25"
+                  >
+                    Download Game
+                  </button>
                 </div>
               </div>
             </div>
           </div>
         </section>
 
-        {/* System Tools & Utilities Section */}
+        {/* Installation Instructions */}
+        <section className="mb-16">
+          <h2 className="text-2xl font-bold text-center mb-8 text-white">
+            Installation Guide
+          </h2>
+
+          <div className="max-w-4xl mx-auto bg-gray-900 border border-gray-700 rounded-lg p-6">
+            <div className="grid md:grid-cols-2 gap-6">
+              {/* Installation Steps */}
+              <div>
+                <h3 className="text-lg font-semibold text-white mb-4">Setup Steps</h3>
+                <div className="space-y-3">
+                  <div className="bg-gray-800 rounded p-3">
+                    <p className="text-gray-300 text-sm mb-1">1. Install Python</p>
+                    <code className="text-blue-400 text-xs">python.org/downloads</code>
+                  </div>
+
+                  <div className="bg-gray-800 rounded p-3">
+                    <p className="text-gray-300 text-sm mb-2">2. Install Pygame</p>
+                    <div className="bg-black rounded p-2 font-mono text-green-400 text-xs">
+                      pip install pygame
+                    </div>
+                  </div>
+
+                  <div className="bg-gray-800 rounded p-3">
+                    <p className="text-gray-300 text-sm">3. Download and run game</p>
+                  </div>
+                </div>
+              </div>
+
+              {/* Terminal Example */}
+              <div>
+                <h3 className="text-lg font-semibold text-white mb-4">Terminal Example</h3>
+                <div className="bg-black rounded p-4 font-mono text-xs">
+                  <div className="text-gray-500 mb-1">$ pip install pygame</div>
+                  <div className="text-gray-400 mb-1">Successfully installed pygame-2.5.2</div>
+                  <div className="text-gray-500 mb-1">$ python snake_game.py</div>
+                  <div className="text-green-400">Game started successfully</div>
+                </div>
+
+                <div className="mt-3 p-3 bg-gray-800 rounded">
+                  <p className="text-gray-300 text-xs">
+                    All games include controls and instructions when you run them.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* System Tools Section */}
         <section className="mb-16">
           <div className="text-center mb-8">
-            <h2 className="text-3xl font-bold mb-4"> System Tools & Utilities</h2>
-            <p className="text-gray-400">Powerful system optimization and utility tools</p>
+            <h2 className="text-2xl font-bold mb-4 text-white">System Tools</h2>
+            <p className="text-gray-400">System optimization and utility tools</p>
           </div>
 
           {!showDownloads ? (
@@ -201,7 +289,6 @@ const MyCodes = () => {
             /* Tools Access Panel */
             <div>
               <div className="text-center mb-8">
-                <div className="text-green-400 text-2xl mb-2">✅</div>
                 <h3 className="text-xl font-bold text-green-400 mb-2">Download Access Granted</h3>
                 <p className="text-gray-400 text-sm mb-4">
                   Remember: Use responsibly and always backup your system first
@@ -227,7 +314,7 @@ const MyCodes = () => {
                       onClick={() => handleDownload('bloatware-cleaner.bat')}
                       className="w-full bg-green-600 hover:bg-green-700 text-white font-medium py-2 px-4 rounded transition-colors"
                     >
-                      📥 Download .bat
+                      Download .bat
                     </button>
                     <div className="bg-green-800 rounded px-3 py-1 text-xs text-green-200">
                       Run as Administrator
@@ -249,7 +336,7 @@ const MyCodes = () => {
                       onClick={() => handleDownload('tcp-optimizer.reg')}
                       className="w-full bg-red-600 hover:bg-red-700 text-white font-medium py-2 px-4 rounded transition-colors"
                     >
-                      ⚡ Download Tool
+                      Download Tool
                     </button>
                     <div className="bg-red-800 rounded px-3 py-1 text-xs text-red-200">
                       Windows Registry
@@ -260,20 +347,19 @@ const MyCodes = () => {
             </div>
 
             {/* Game Optimizer */}
-            <div className="bg-gradient-to-br from-purple-600 to-pink-600 rounded-xl p-1 hover:scale-105 transition-all duration-300 cursor-pointer">
-              <div className="bg-black rounded-lg p-6 h-full">
+            <div className="bg-gray-800 border border-gray-700 rounded-lg hover:border-gray-600 transition-colors cursor-pointer">
+              <div className="p-6 h-full">
                 <div className="text-center">
-                  <div className="text-4xl mb-4">🎯</div>
-                  <h3 className="text-lg font-bold text-white mb-2">Game Optimizer</h3>
+                  <h3 className="text-lg font-semibold text-white mb-2">Game Optimizer</h3>
                   <p className="text-gray-400 text-sm mb-4">Boost FPS and reduce input lag</p>
                   <div className="space-y-2">
                     <button
                       onClick={() => handleDownload('game-optimizer.bat')}
-                      className="w-full bg-purple-600 hover:bg-purple-700 text-white font-medium py-2 px-4 rounded transition-colors"
+                      className="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded transition-colors"
                     >
-                      🚀 Download Pack
+                      Download Pack
                     </button>
-                    <div className="bg-purple-800 rounded px-3 py-1 text-xs text-purple-200">
+                    <div className="bg-gray-700 rounded px-3 py-1 text-xs text-gray-300">
                       Registry + Scripts
                     </div>
                   </div>
@@ -282,20 +368,19 @@ const MyCodes = () => {
             </div>
 
             {/* System Monitor */}
-            <div className="bg-gradient-to-br from-yellow-600 to-amber-600 rounded-xl p-1 hover:scale-105 transition-all duration-300 cursor-pointer">
-              <div className="bg-black rounded-lg p-6 h-full">
+            <div className="bg-gray-800 border border-gray-700 rounded-lg hover:border-gray-600 transition-colors cursor-pointer">
+              <div className="p-6 h-full">
                 <div className="text-center">
-                  <div className="text-4xl mb-4">📊</div>
-                  <h3 className="text-lg font-bold text-white mb-2">System Monitor</h3>
+                  <h3 className="text-lg font-semibold text-white mb-2">System Monitor</h3>
                   <p className="text-gray-400 text-sm mb-4">Real-time PC performance stats</p>
                   <div className="space-y-2">
                     <button
                       onClick={() => handleDownload('system-monitor.bat')}
-                      className="w-full bg-yellow-600 hover:bg-yellow-700 text-white font-medium py-2 px-4 rounded transition-colors"
+                      className="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded transition-colors"
                     >
-                      📈 Download Tool
+                      Download Tool
                     </button>
-                    <div className="bg-yellow-800 rounded px-3 py-1 text-xs text-yellow-200">
+                    <div className="bg-gray-700 rounded px-3 py-1 text-xs text-gray-300">
                       Portable EXE
                     </div>
                   </div>
@@ -304,20 +389,19 @@ const MyCodes = () => {
             </div>
 
             {/* Privacy Cleaner */}
-            <div className="bg-gradient-to-br from-gray-600 to-slate-600 rounded-xl p-1 hover:scale-105 transition-all duration-300 cursor-pointer">
-              <div className="bg-black rounded-lg p-6 h-full">
+            <div className="bg-gray-800 border border-gray-700 rounded-lg hover:border-gray-600 transition-colors cursor-pointer">
+              <div className="p-6 h-full">
                 <div className="text-center">
-                  <div className="text-4xl mb-4">🔒</div>
-                  <h3 className="text-lg font-bold text-white mb-2">Privacy Cleaner</h3>
+                  <h3 className="text-lg font-semibold text-white mb-2">Privacy Cleaner</h3>
                   <p className="text-gray-400 text-sm mb-4">Clear traces and temp files</p>
                   <div className="space-y-2">
                     <button
                       onClick={() => handleDownload('privacy-cleaner.ps1')}
-                      className="w-full bg-gray-600 hover:bg-gray-700 text-white font-medium py-2 px-4 rounded transition-colors"
+                      className="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded transition-colors"
                     >
-                      🧽 Download Script
+                      Download Script
                     </button>
-                    <div className="bg-gray-800 rounded px-3 py-1 text-xs text-gray-200">
+                    <div className="bg-gray-700 rounded px-3 py-1 text-xs text-gray-300">
                       PowerShell Script
                     </div>
                   </div>
@@ -326,20 +410,19 @@ const MyCodes = () => {
             </div>
 
             {/* WiFi Password Viewer */}
-            <div className="bg-gradient-to-br from-blue-600 to-cyan-600 rounded-xl p-1 hover:scale-105 transition-all duration-300 cursor-pointer">
-              <div className="bg-black rounded-lg p-6 h-full">
+            <div className="bg-gray-800 border border-gray-700 rounded-lg hover:border-gray-600 transition-colors cursor-pointer">
+              <div className="p-6 h-full">
                 <div className="text-center">
-                  <div className="text-4xl mb-4">📶</div>
-                  <h3 className="text-lg font-bold text-white mb-2">WiFi Password Tool</h3>
+                  <h3 className="text-lg font-semibold text-white mb-2">WiFi Password Tool</h3>
                   <p className="text-gray-400 text-sm mb-4">View saved WiFi passwords</p>
                   <div className="space-y-2">
                     <button
                       onClick={() => handleDownload('wifi-password-viewer.bat')}
                       className="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded transition-colors"
                     >
-                      🔑 Download Tool
+                      Download Tool
                     </button>
-                    <div className="bg-blue-800 rounded px-3 py-1 text-xs text-blue-200">
+                    <div className="bg-gray-700 rounded px-3 py-1 text-xs text-gray-300">
                       Command Line
                     </div>
                   </div>
@@ -424,7 +507,6 @@ const MyCodes = () => {
             <div className="max-w-md mx-auto">
               <div className="bg-gray-900 border border-green-600 rounded-lg p-6">
                 <div className="text-center mb-6">
-                  <div className="text-green-400 text-2xl mb-2">✅</div>
                   <h3 className="text-xl font-bold text-green-400 mb-2">Access Granted</h3>
                   <p className="text-gray-400 text-sm">
                     Remember: Use responsibly for learning only
@@ -436,7 +518,7 @@ const MyCodes = () => {
                     to="/codes/c-programming"
                     className="block w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-4 rounded-lg transition-colors text-center"
                   >
-                    📚 C Programming
+                    C Programming
                   </Link>
                   <Link
                     to="/codes/html-programming"
